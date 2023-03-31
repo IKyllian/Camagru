@@ -15,21 +15,14 @@
         <?php endif; ?>
 
         <?php foreach($posts as $post): ?>
-            <p> <?= $post['username'] ?> </p>
-            <a href="post_preview.php?post_id=<?= $post['post_id']?>" >
-                <img src="<?= $post['picture_path'] ?>" />
+            <p> <?= $post->post_data['username'] ?> </p>
+            <a href="post_preview.php?post_id=<?= $post->post_data['post_id']?>" >
+                <img src="<?= $post->post_data['picture_path'] ?>" />
                 <div>
-                    <span> comments: <?= $count_comment ?> </span>
-                    <span> like: <?= $count_like ?> </span>
+                    <span> comments: <?= $post->nb_comments ?> </span>
+                    <span> like: <?= $post->nb_likes ?> </span>
                 </div>
-               
             </a>
-
-            <!-- <form class="comment-form" name="comment-form">
-                <input type="hidden" name="post-id" value="<?= $post['post_id'] ?>" />
-                <input type="text" name="comment" />
-                <button formmethod="post"> Envoyer </button>
-            </form> -->
         <?php endforeach; ?>
     </body>
 </html>

@@ -1,5 +1,4 @@
 <?php
-
     require_once('./redirect.php');
     require_once('../Model/user_sql.php');
     session_start();
@@ -17,10 +16,11 @@
         $comment = validate_data($_POST['comment']);
         $post_id = $_POST['post_id']; // Check if number;
 
-        if (create_comment($post_id, $_SESSION['id'], $comment))
-            echo "success";
-        else
-            echo "failed";
+        if (check_post_exist($post_id)) {
+            if (create_comment($post_id, $_SESSION['id'], $comment))
+                echo "success";
+            else
+                echo "failed";
+        }       
     }
-
 ?>

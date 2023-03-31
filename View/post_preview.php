@@ -1,6 +1,5 @@
 <?php
     require_once("../Controller/post_preview.php");
-
 ?>
 
 <!DOCTYPE html>
@@ -22,6 +21,16 @@
         <?php else: ?>
             <p> No Comments yet </p>
         <?php endif; ?>
-       <p> Number of like : <?= $nb_like ?> </p>
+        <?php if ($is_post_liked): ?>
+            <button id="btn-unlike" post-id="<?= $post['post_id'] ?>"> unlike </button>
+        <?php else: ?>
+            <button id="btn-like" post-id="<?= $post['post_id'] ?>"> like </button>
+        <?php endif; ?>
+       <p id="nb_like"><?= $nb_like ?></p>
+       <form id="comment-form">
+            <input type="hidden" name="post-id" value="<?= $post['post_id'] ?>" />
+            <input type="text" name="comment" />
+            <button formmethod="post"> Envoyer </button>
+        </form>
     </body>
 </html>

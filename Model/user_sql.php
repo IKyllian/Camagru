@@ -154,7 +154,24 @@ function user_liked_post(int $post_id, int $user_id) {
     ];
     $statement->execute($data);
 
-    if ($statement->fetchColumn())
+    if ($statement->rowCount() > 0)
+        return true;
+    else
+        return false;
+}
+
+function check_post_exist(int $post_id) {
+    $sql = "SELECT post_id
+            FROM posts
+            WHERE post_id=:post_id";
+
+    $statement = db_connection()->prepare($sql);
+    $data = [
+        ':post_id' => $post_id,
+    ];
+    $statement->execute($data);
+
+    if ($statement->rowCount() > 0)
         return true;
     else
         return false;
@@ -187,27 +204,32 @@ function get_comments_from_post(int $post_id) {
 }
 
 function add_like(int $post_id, int $user_id) {
-    $sql = "INSERT INTO likes (post_id, user_id) VALUES (:post_id, :user_id)";
-    $statement = db_connection()->prepare($sql);
-
-    $data = [
-        ':post_id' => $post_id,
-        ':user_id' => $user_id,
-    ];
-
-    return $statement->execute($data);
+    if (!user_liked_post($post_id, $user_id)) {
+        $sql = "INSERT INTO likes (post_id, user_id) VALUES (:post_id, :user_id)";
+        $statement = db_connection()->prepare($sql);
+    
+        $data = [
+            ':post_id' => $post_id,
+            ':user_id' => $user_id,
+        ];
+        return $statement->execute($data);
+    }
+    return false;
 }
 
 function remove_like(int $post_id, int $user_id) {
-    $sql = "DELETE FROM likes WHERE post_id=:post_id and user_id=:user_id";
-    $statement = db_connection()->prepare($sql);
-
-    $data = [
-        ':post_id' => $post_id,
-        ':user_id' => $user_id,
-    ];
-
-    return $statement->execute($data);
+    if (user_liked_post($post_id, $user_id)) {
+        $sql = "DELETE FROM likes WHERE post_id=:post_id and user_id=:user_id";
+        $statement = db_connection()->prepare($sql);
+    
+        $data = [
+            ':post_id' => $post_id,
+            ':user_id' => $user_id,
+        ];
+    
+        return $statement->execute($data);
+    }
+    return false;
 }
 
 function create_comment(int $post_id, int $user_id, string $comment) {
@@ -225,4 +247,3 @@ function create_comment(int $post_id, int $user_id, string $comment) {
 }
 
 ?>
-
