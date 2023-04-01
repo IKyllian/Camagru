@@ -1,7 +1,8 @@
 <?php
 
 require_once("../Model/user_sql.php");
-require_once("./redirect.php");
+require_once(__DIR__ . "/redirect.php");
+session_start();
 
 function validate_data($data) {
     $data = trim($data);
@@ -23,8 +24,6 @@ function is_valid_datas($username, $password) {
 
     return (1);
 }
-
-session_start();
 
 if (is_valid_datas($_POST['username'], $_POST['password'])) {
     $username = validate_data($_POST['username']);

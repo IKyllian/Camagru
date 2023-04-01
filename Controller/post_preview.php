@@ -1,6 +1,8 @@
 <?php
     require_once("../Controller/redirect.php");
-    require_once("../Model/user_sql.php");
+    require_once('../Model/like_sql.php');
+    require_once('../Model/comment_sql.php');
+    require_once('../Model/post_sql.php');
     session_start();
 
     if (!isset($_SESSION['logged']) || !isset($_SESSION['id'])) {

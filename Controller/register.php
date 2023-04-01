@@ -1,5 +1,6 @@
 <?php
-
+require_once("../Model/user_sql.php");
+session_start();
 function is_valid_datas($username, $email, $password) {
     if (!isset($username, $password, $email)) {
         redirect_to("/View/register.php", "error_msg", "Please complete the registration form");
@@ -59,9 +60,6 @@ function send_activation_email(string $email, string $activation_code): void
     echo("ret = {$ret}");
 
 }
-
-require_once("../Model/user_sql.php");
-session_start();
 
 if (is_valid_datas($_POST['username'], $_POST['email'], $_POST['password']))
 {

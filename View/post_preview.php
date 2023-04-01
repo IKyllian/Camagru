@@ -7,7 +7,7 @@
     <head>
         <title>Post Preview</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="../js/post_preview.js"> </script>
+        <script type="module" src="../js/post_preview.js"> </script>
     </head>
 
     <body>

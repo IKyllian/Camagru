@@ -1,9 +1,9 @@
 <?php
-    require_once('./redirect.php');
+    require_once(__DIR__ . '/redirect.php');
     require_once('../Model/user_sql.php');
     session_start();
 
-    if (!isset($_SESSION['id']))
+    if (!isset($_SESSION['id']) && find_user(array('user_id'), 'user_id', $_SESSION['id']) != false)
         redirect_to("/View/login.php");
     if (isset($_POST['img_data']) && isset($_POST['img_id'])) {
         // $_SESSION['uploaded'] = "IMG uploaded";
@@ -20,12 +20,16 @@
 
         $file_infos = finfo_open();
         $mime_type = finfo_buffer($file_infos, $img_datas, FILEINFO_MIME_TYPE);
-
+        
         if ($mime_type == 'image/jpeg') {
             $img_name = bin2hex(random_bytes(16)) . ".jpeg";
             $img_path = "../public/pictures/{$img_name}";
 
             $img_created = imagecreatefromstring($img_datas);
+            $img_filter = imagecreatefrompng('../public/filters/5a28b41a3f4334.5103353815126169862591.png');
+
+            imagecopymerge($img_created, $img_filter, 10, 10, 0, 0, 500, 200, 75);
+            
             imagejpeg($img_created, $img_path);
             imagedestroy($img_created);
 

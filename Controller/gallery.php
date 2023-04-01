@@ -1,7 +1,8 @@
 <?php
-
     require_once("../Controller/redirect.php");
-    require_once("../Model/user_sql.php");
+    require_once('../Model/like_sql.php');
+    require_once('../Model/comment_sql.php');
+    require_once('../Model/post_sql.php');
     session_start();
 
     class Post {
@@ -17,7 +18,7 @@
     $req_error = false;
     $all_posts = get_all_post();
     $posts = array();
-
+    
     foreach($all_posts as $item) {
         $new_post = new Post();
         $new_post->post_data = $item;

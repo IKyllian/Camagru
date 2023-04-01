@@ -4,7 +4,7 @@ require_once('../connection.php');
 require_once('../Controller/user_utils.php');
 require_once('../Controller/redirect.php');
 
-function find_user($fields, $condition_field, $condition_value) {
+function find_user(array $fields, string $condition_field, string $condition_value) {
     $fields_to_string = implode(", ", $fields);
     $stmt = db_connection()->prepare("SELECT {$fields_to_string} FROM users WHERE {$condition_field} = :{$condition_field}");
     $result = $stmt->execute([":{$condition_field}" => $condition_value]);
@@ -116,34 +116,6 @@ function create_user_img(int $user_id, string $path) {
     return $statement->execute($data);
 }
 
-function get_all_post() {
-    $sql = "SELECT posts.*, users.username
-            FROM posts
-            INNER JOIN users
-            ON posts.user_id=users.user_id";
-
-    $statement = db_connection()->prepare($sql);
-    $statement->execute();
-
-    return $statement->fetchAll();
-}
-
-function get_post_by_id(int $post_id) {
-    $sql = "SELECT posts.*, users.username
-            FROM posts
-            INNER JOIN users
-            ON posts.user_id=users.user_id
-            WHERE post_id=:post_id";
-
-    $statement = db_connection()->prepare($sql);
-    $data = [
-        ':post_id' => $post_id,
-    ];
-    $statement->execute($data);
-
-    return $statement->fetch();
-}
-
 function user_liked_post(int $post_id, int $user_id) {
     $sql = "SELECT * FROM likes WHERE post_id=:post_id and user_id=:user_id";
 
@@ -158,92 +130,6 @@ function user_liked_post(int $post_id, int $user_id) {
         return true;
     else
         return false;
-}
-
-function check_post_exist(int $post_id) {
-    $sql = "SELECT post_id
-            FROM posts
-            WHERE post_id=:post_id";
-
-    $statement = db_connection()->prepare($sql);
-    $data = [
-        ':post_id' => $post_id,
-    ];
-    $statement->execute($data);
-
-    if ($statement->rowCount() > 0)
-        return true;
-    else
-        return false;
-}
-
-function get_comment_number(int $post_id) {
-    $sql = "SELECT COUNT(*) FROM comments WHERE post_id={$post_id}";
-    $statement = db_connection()->query($sql);
-    return $statement->fetchColumn();
-}
-
-function get_like_number(int $post_id) {
-    $sql = "SELECT COUNT(*) FROM likes WHERE post_id={$post_id}";
-    $statement = db_connection()->query($sql);
-    return $statement->fetchColumn();
-}
-
-function get_comments_from_post(int $post_id) {
-    $sql = "SELECT comments.*, users.username
-            FROM comments
-            INNER JOIN users
-            ON comments.user_id=users.user_id
-            WHERE post_id=:post_id";
-
-    $statement = db_connection()->prepare($sql);
-    $statement->bindValue(':post_id', $post_id, PDO::PARAM_INT);
-    $statement->execute();
-
-    return $statement->fetchAll();
-}
-
-function add_like(int $post_id, int $user_id) {
-    if (!user_liked_post($post_id, $user_id)) {
-        $sql = "INSERT INTO likes (post_id, user_id) VALUES (:post_id, :user_id)";
-        $statement = db_connection()->prepare($sql);
-    
-        $data = [
-            ':post_id' => $post_id,
-            ':user_id' => $user_id,
-        ];
-        return $statement->execute($data);
-    }
-    return false;
-}
-
-function remove_like(int $post_id, int $user_id) {
-    if (user_liked_post($post_id, $user_id)) {
-        $sql = "DELETE FROM likes WHERE post_id=:post_id and user_id=:user_id";
-        $statement = db_connection()->prepare($sql);
-    
-        $data = [
-            ':post_id' => $post_id,
-            ':user_id' => $user_id,
-        ];
-    
-        return $statement->execute($data);
-    }
-    return false;
-}
-
-function create_comment(int $post_id, int $user_id, string $comment) {
-    $sql = "INSERT INTO comments (content, post_id, user_id) VALUES (:content, :post_id, :user_id)";
-
-    $statement = db_connection()->prepare($sql);
-
-    $data = [
-        ':content' => $comment,
-        ':post_id' => $post_id,
-        ':user_id' => $user_id,
-    ];
-
-    return $statement->execute($data);
 }
 
 ?>
