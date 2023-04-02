@@ -1,18 +1,14 @@
 <?php
-    require_once("../Controller/redirect.php");
-    require_once('../Model/like_sql.php');
-    require_once('../Model/comment_sql.php');
-    require_once('../Model/post_sql.php');
-    session_start();
+    require_once(__DIR__.'/log_check.php');
+    require_once(__DIR__."/../Controller/redirect.php");
+    require_once(__DIR__.'/../Model/like_sql.php');
+    require_once(__DIR__.'/../Model/comment_sql.php');
+    require_once(__DIR__.'/../Model/post_sql.php');
 
     class Post {
         public $post_data;
         public $nb_comments;
         public $nb_likes;
-    }
-
-    if (!isset($_SESSION['logged'])) {
-        redirect_to("/View/login.php");
     }
 
     $req_error = false;

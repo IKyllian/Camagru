@@ -1,13 +1,14 @@
 <?php
-    require_once("../Controller/redirect.php");
+    require_once(__DIR__."/../Controller/redirect.php");
     session_start();
-    
-    $form_error = !empty($_SESSION['error_msg']) ? $_SESSION['error_msg'] : NULL;
-    unset($_SESSION['error_msg']);
 
     if (isset($_SESSION['logged'])) {
         redirect_to("/index.php");
     }
+    
+    $form_error = !empty($_SESSION['error_msg']) ? $_SESSION['error_msg'] : NULL;
+    unset($_SESSION['error_msg']);
+  
 ?>
 
 <!DOCTYPE html>

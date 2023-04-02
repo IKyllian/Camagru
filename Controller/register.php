@@ -1,5 +1,5 @@
 <?php
-require_once("../Model/user_sql.php");
+require_once(__DIR__."/../Model/user_sql.php");
 session_start();
 function is_valid_datas($username, $email, $password) {
     if (!isset($username, $password, $email)) {

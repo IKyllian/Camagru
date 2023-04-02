@@ -1,5 +1,5 @@
 <?php
-    require_once("../Controller/gallery.php");
+    require_once(__DIR__."/../Controller/gallery.php");
 ?>
 
 <!DOCTYPE html>

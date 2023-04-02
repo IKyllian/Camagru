@@ -1,6 +1,6 @@
 <?php
-require_once(__DIR__ . '/user_sql.php');
-require_once('../connection.php');
+require_once(__DIR__.'/user_sql.php');
+require_once(__DIR__.'/../connection.php');
 
 function get_like_number(int $post_id) {
     $sql = "SELECT COUNT(*) FROM likes WHERE post_id={$post_id}";

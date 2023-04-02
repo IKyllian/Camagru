@@ -1,5 +1,5 @@
 <?php
-    require_once("../Controller/post_preview.php");
+    require_once(__DIR__."/../Controller/post_preview.php");
 ?>
 
 <!DOCTYPE html>

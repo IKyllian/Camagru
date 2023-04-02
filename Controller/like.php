@@ -1,9 +1,9 @@
 <?php
-    require_once(__DIR__ . '/redirect.php');
-    require_once('../Model/user_sql.php');
-    require_once('../Model/post_sql.php');
-    require_once('../Model/like_sql.php');
-    session_start();
+    require_once(__DIR__.'/log_check.php');
+    require_once(__DIR__.'/redirect.php');
+    require_once(__DIR__.'/../Model/user_sql.php');
+    require_once(__DIR__.'/../Model/post_sql.php');
+    require_once(__DIR__.'/../Model/like_sql.php');
 
     function validate_data($data) {
         $data = trim($data);
@@ -12,8 +12,6 @@
         return $data;
     }
 
-    if (!isset($_SESSION['id']))
-        redirect_to("/View/login.php");
     if (isset($_POST['action']) && isset($_POST['post_id'])) {
         $action = $_POST['action'];
         $post_id = $_POST['post_id'];

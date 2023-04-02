@@ -1,10 +1,8 @@
 <?php
-    require_once(__DIR__ . '/redirect.php');
-    require_once('../Model/user_sql.php');
-    session_start();
+    require_once(__DIR__.'/log_check.php');
+    require_once(__DIR__.'/redirect.php');
+    require_once(__DIR__.'/../Model/user_sql.php');
 
-    if (!isset($_SESSION['id']) && find_user(array('user_id'), 'user_id', $_SESSION['id']) != false)
-        redirect_to("/View/login.php");
     if (isset($_POST['img_data']) && isset($_POST['img_id'])) {
         // $_SESSION['uploaded'] = "IMG uploaded";
         $img_datas = $_POST['img_data'];

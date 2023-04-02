@@ -1,6 +1,6 @@
 <?php
 
-require_once "../Model/user_sql.php";
+require_once(__DIR__."/../Model/user_sql.php");
 
 // Need to sanitize
 $user = find_unverified_user($_GET['activation_code'], $_GET['email']);

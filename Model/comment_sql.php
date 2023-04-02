@@ -1,5 +1,5 @@
 <?php
-require_once('../connection.php');
+require_once(__DIR__.'/../connection.php');
 
 function get_comment_number(int $post_id) {
     $sql = "SELECT COUNT(*) FROM comments WHERE post_id={$post_id}";

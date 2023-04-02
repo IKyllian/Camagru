@@ -1,7 +1,7 @@
 <?php
 
-require_once("../Model/user_sql.php");
-require_once(__DIR__ . "/redirect.php");
+require_once(__DIR__."/../Model/user_sql.php");
+require_once(__DIR__."/redirect.php");
 session_start();
 
 function validate_data($data) {

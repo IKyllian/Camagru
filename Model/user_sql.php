@@ -1,8 +1,8 @@
 <?php
 
-require_once('../connection.php');
-require_once('../Controller/user_utils.php');
-require_once('../Controller/redirect.php');
+require_once(__DIR__.'/../connection.php');
+require_once(__DIR__.'/../Controller/user_utils.php');
+require_once(__DIR__.'/../Controller/redirect.php');
 
 function find_user(array $fields, string $condition_field, string $condition_value) {
     $fields_to_string = implode(", ", $fields);

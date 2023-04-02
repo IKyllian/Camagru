@@ -1,10 +1,6 @@
 <?php
-    session_start();
+    require_once(__DIR__.'/Controller/log_check.php');
     // require 'setup.php';
-    if (!isset($_SESSION['logged'])) {
-        header("Location: /View/login.php");
-        exit ;
-    }
 
     $path = "./public/filters/";
     $filters = array_diff(scandir($path), array('.', '..'));
