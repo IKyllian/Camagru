@@ -22,15 +22,13 @@
     </head>
 
     <body>
-        <h1> Hello </h1>
-        <a href="./View/gallery.php"> Gallery </a>
-        <a href="./Controller/logout.php"> Logout </a>
+        <?php require_once(__DIR__.'/View/header.php') ?>
         <?php if ($status_img): ?>
             <p> <?php echo $status_img ?>  </p>
         <?php endif; ?>
 
         <?php foreach($filters as $filter): ?>
-            <img src="<?= $path . $filter ?>" width="100" height="100" />
+            <img class="filter-btn" src="<?= $path . $filter ?>" width="100" height="100" />
         <?php endforeach; ?>
 
         <form id="form-file">

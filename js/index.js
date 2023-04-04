@@ -9,8 +9,10 @@ load_page(() => {
 	let form_file_upload = document.getElementById("form-file");
 	let startbutton = document.getElementById("btn-shoot");
 	let btn_cam = document.getElementById('btn-cam');
+	let filter_array = document.getElementsByClassName('filter-btn');
 	let width = canvas.width;
 	let height = canvas.height;
+	let filters = [];
 
 	create_event_listener(btn_cam, 'click', activate_cam);
 	create_event_listener(form_file_upload, 'change', on_file_change);
@@ -22,6 +24,22 @@ load_page(() => {
 	create_event_listener(save, 'click', () => {
 		savePict(photo);
 	});
+
+	for (const filter of filter_array) {
+		create_event_listener(filter, 'click', on_filter_click);
+	}
+
+	function on_filter_click(e) {
+		const elem_path = e.target.attributes['src'].value
+		if (!filters.find(e => e === elem_path)) {
+			filters.push(elem_path);
+			e.target.style.border = "1px solid red";
+		} else {
+			filters = filters.filter(e => e !== elem_path);
+			e.target.style.border = "none";
+		}
+		console.log(filters);
+	}
 	
 	function activate_cam() {
 		navigator.mediaDevices.getUserMedia({ video: true, audio: false })
@@ -49,7 +67,6 @@ load_page(() => {
 					context.drawImage(new_img, 0, 0, width, height);
 					const data = canvas.toDataURL("image/jpeg");
 					photo.setAttribute("src", data);
-					alert('the image is drawn');
 					URL.revokeObjectURL(new_img.src);
 				}
 				new_img.src =  URL.createObjectURL(file);
@@ -72,6 +89,9 @@ load_page(() => {
 		let imgData = new FormData();
 		imgData.append('img_data', img.src);
 		imgData.append('img_id', img.id);
+		if (filters.length > 0) {
+			imgData.append('filters', JSON.stringify(filters));
+		}
 		let XHR = new XMLHttpRequest();
 		XHR.onreadystatechange = function () {
 			if (this.readyState === 4 && this.status === 200) {

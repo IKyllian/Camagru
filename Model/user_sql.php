@@ -41,7 +41,7 @@ function user_register(string $username, string $email, string $password, string
                                             VALUES (:username, :email, :password, :activation_code, :activation_expiry)");
     $data = [
         ':username' => $username,
-        ':email' => $email,
+        ':email' => strtolower($email),
         ':password' => password_hash($password, PASSWORD_DEFAULT),
         ':activation_code' => password_hash($activation_code, PASSWORD_DEFAULT),
         ':activation_expiry' => date('Y-m-d H:i:s', time() + $expiry),
@@ -130,6 +130,21 @@ function user_liked_post(int $post_id, int $user_id) {
         return true;
     else
         return false;
+}
+
+function change_user_field(int $user_id, string $field, string $field_value) {
+    $user = find_user(array("user_id, {$field}"), "user_id", $user_id);
+
+    if (!$user || ($user && $user["{$field}"] == $field_value))
+        return false;
+
+    $sql = "UPDATE users SET {$field}=:{$field} WHERE user_id=:user_id";
+    $statement = db_connection()->prepare($sql);
+    $data = [
+        ":{$field}" => $field_value,
+        ':user_id' => $user_id,
+    ];
+    return $statement->execute($data);
 }
 
 ?>

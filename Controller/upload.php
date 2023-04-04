@@ -4,7 +4,9 @@
     require_once(__DIR__.'/../Model/user_sql.php');
 
     if (isset($_POST['img_data']) && isset($_POST['img_id'])) {
-        // $_SESSION['uploaded'] = "IMG uploaded";
+        $filters_path = null;
+        if (isset($_POST['filters']) && !empty($_POST['filters']))
+            $filters_path = json_decode($_POST['filters']);
         $img_datas = $_POST['img_data'];
         $img_id = $_POST['img_id'];
 
@@ -19,15 +21,25 @@
         $file_infos = finfo_open();
         $mime_type = finfo_buffer($file_infos, $img_datas, FILEINFO_MIME_TYPE);
         
-        if ($mime_type == 'image/jpeg') {
+        if ($mime_type === 'image/jpeg') {
             $img_name = bin2hex(random_bytes(16)) . ".jpeg";
             $img_path = "../public/pictures/{$img_name}";
 
             $img_created = imagecreatefromstring($img_datas);
-            $img_filter = imagecreatefrompng('../public/filters/5a28b41a3f4334.5103353815126169862591.png');
 
-            imagecopymerge($img_created, $img_filter, 10, 10, 0, 0, 500, 200, 75);
-            
+            if ($filters_path) {
+                foreach ($filters_path as $item) {
+                    $filter_path = __DIR__."/.".$item;
+                    if (file_exists($filter_path)) {
+                        $filter_mime_type = mime_content_type($filter_path);
+                        if ($filter_mime_type === 'image/png') {
+                            $img_filter = imagecreatefrompng($filter_path);
+                            list($width, $height) = getimagesize($filter_path);
+                            imagecopy($img_created, $img_filter, 10, 10, 0, 0, $width, $height);
+                        }
+                    }
+                }
+            }
             imagejpeg($img_created, $img_path);
             imagedestroy($img_created);
 
