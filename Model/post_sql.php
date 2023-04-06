@@ -6,10 +6,8 @@ function check_post_exist(int $post_id) {
             WHERE post_id=:post_id";
 
     $statement = db_connection()->prepare($sql);
-    $data = [
-        ':post_id' => $post_id,
-    ];
-    $statement->execute($data);
+    $statement->bindValue(':post_id', $post_id, PDO::PARAM_INT);
+    $statement->execute();
 
     if ($statement->rowCount() > 0)
         return true;
@@ -25,10 +23,8 @@ function get_post_by_id(int $post_id) {
             WHERE post_id=:post_id";
 
     $statement = db_connection()->prepare($sql);
-    $data = [
-        ':post_id' => $post_id,
-    ];
-    $statement->execute($data);
+    $statement->bindValue(':post_id', $post_id, PDO::PARAM_INT);
+    $statement->execute();
 
     return $statement->fetch();
 }
@@ -44,7 +40,5 @@ function get_all_post() {
 
     return $statement->fetchAll();
 }
-
-
 
 ?>

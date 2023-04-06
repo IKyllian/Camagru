@@ -4,10 +4,26 @@ require_once(__DIR__.'/../connection.php');
 require_once(__DIR__.'/../Controller/user_utils.php');
 require_once(__DIR__.'/../Controller/redirect.php');
 
-function find_user(array $fields, string $condition_field, string $condition_value) {
+function get_condition_type(mixed $condition_value) {
+    $type = gettype($condition_value);
+    if ($type === "string")
+        return PDO::PARAM_STR;
+    else if ($type === "integer")
+        return PDO::PARAM_INT;
+    else if ($type === "boolean")
+        return PDO::PARAM_BOOL;
+    else
+        return null;
+}
+
+function find_user(array $fields, string $condition_field, mixed $condition_value) {
+    $condition_type = get_condition_type($condition_value);
+    if ($condition_type === null)
+        return false;
     $fields_to_string = implode(", ", $fields);
     $stmt = db_connection()->prepare("SELECT {$fields_to_string} FROM users WHERE {$condition_field} = :{$condition_field}");
-    $result = $stmt->execute([":{$condition_field}" => $condition_value]);
+    $stmt->bindValue(":{$condition_field}", $condition_value, $condition_type);
+    $result = $stmt->execute();
     if (false === $result) {
         throw new Exception(implode(' ', $stmt->errorInfo()));
     }
@@ -39,15 +55,14 @@ function user_register(string $username, string $email, string $password, string
     $statement = db_connection()->prepare(" INSERT
                                             INTO users (username, email, password, activation_code, activation_expiry)
                                             VALUES (:username, :email, :password, :activation_code, :activation_expiry)");
-    $data = [
-        ':username' => $username,
-        ':email' => strtolower($email),
-        ':password' => password_hash($password, PASSWORD_DEFAULT),
-        ':activation_code' => password_hash($activation_code, PASSWORD_DEFAULT),
-        ':activation_expiry' => date('Y-m-d H:i:s', time() + $expiry),
-    ];
-    return $statement->execute($data);
 
+    $statement->bindValue(':username', $username, PDO::PARAM_STR);
+    $statement->bindValue(':email', strtolower($email), PDO::PARAM_STR);
+    $statement->bindValue(':password', password_hash($password, PASSWORD_DEFAULT), PDO::PARAM_STR);
+    $statement->bindValue(':activation_code', password_hash($activation_code, PASSWORD_DEFAULT), PDO::PARAM_STR);
+    $statement->bindValue(':activation_expiry', date('Y-m-d H:i:s', time() + $expiry), PDO::PARAM_STR);
+
+    return $statement->execute();
 }
 
 function delete_user_by_id(int $id, int $active = 0)
@@ -70,7 +85,7 @@ function find_unverified_user(string $activation_code, string $email)
 
     $statement = db_connection()->prepare($sql);
 
-    $statement->bindValue(':email', $email);
+    $statement->bindValue(':email', $email, PDO::PARAM_STR);
     $statement->execute();
 
     $user = $statement->fetch(PDO::FETCH_ASSOC);
@@ -108,23 +123,19 @@ function create_user_img(int $user_id, string $path) {
 
     $statement = db_connection()->prepare($sql);
 
-    $data = [
-        ':picture_path' => $path,
-        ':user_id' => $user_id,
-    ];
+    $statement->bindValue(':picture_path', $path, PDO::PARAM_STR);
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 
-    return $statement->execute($data);
+    return $statement->execute();
 }
 
 function user_liked_post(int $post_id, int $user_id) {
     $sql = "SELECT * FROM likes WHERE post_id=:post_id and user_id=:user_id";
 
     $statement = db_connection()->prepare($sql);
-    $data = [
-        ':post_id' => $post_id,
-        ':user_id' => $user_id,
-    ];
-    $statement->execute($data);
+    $statement->bindValue(':post_id', $post_id, PDO::PARAM_INT);
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    $statement->execute();
 
     if ($statement->rowCount() > 0)
         return true;
@@ -133,18 +144,20 @@ function user_liked_post(int $post_id, int $user_id) {
 }
 
 function change_user_field(int $user_id, string $field, string $field_value) {
+    $field_type = get_condition_type($field_value);
+    if ($field_type === null)
+        return false;
     $user = find_user(array("user_id, {$field}"), "user_id", $user_id);
 
     if (!$user || ($user && $user["{$field}"] == $field_value))
         return false;
 
     $sql = "UPDATE users SET {$field}=:{$field} WHERE user_id=:user_id";
+    
     $statement = db_connection()->prepare($sql);
-    $data = [
-        ":{$field}" => $field_value,
-        ':user_id' => $user_id,
-    ];
-    return $statement->execute($data);
+    $statement->bindValue(":{$field}", $field_value, $field_type);
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    return $statement->execute();
 }
 
 ?>

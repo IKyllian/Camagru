@@ -2,11 +2,10 @@
     require_once(__DIR__.'/log_check.php');
     require_once(__DIR__.'/redirect.php');
     require_once(__DIR__.'/../Model/user_sql.php');
+    require_once(__DIR__.'/parse.php');
 
-    if (isset($_POST['img_data']) && isset($_POST['img_id'])) {
-        $filters_path = null;
-        if (isset($_POST['filters']) && !empty($_POST['filters']))
-            $filters_path = json_decode($_POST['filters']);
+    if (is_datas_set(array($_POST['img_data'], $_POST['filters']))) { 
+        $filters_path = json_decode($_POST['filters']);
         $img_datas = $_POST['img_data'];
         $img_id = $_POST['img_id'];
 

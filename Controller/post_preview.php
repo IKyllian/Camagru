@@ -4,8 +4,9 @@
     require_once(__DIR__.'/../Model/like_sql.php');
     require_once(__DIR__.'/../Model/comment_sql.php');
     require_once(__DIR__.'/../Model/post_sql.php');
+    require_once(__DIR__.'/parse.php');
 
-    if (!isset($_GET['post_id']) || empty($_GET['post_id']) || !is_numeric($_GET['post_id'])) {
+    if (!is_datas_set(array($_GET['post_id'])) && !is_numeric($_GET['post_id'])) { 
         redirect_to('/View/gallery.php');
     }
 

@@ -4,15 +4,9 @@
     require_once(__DIR__.'/../Model/user_sql.php');
     require_once(__DIR__.'/../Model/post_sql.php');
     require_once(__DIR__.'/../Model/like_sql.php');
+    require_once(__DIR__.'/parse.php');
 
-    function validate_data($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
-
-    if (isset($_POST['action']) && isset($_POST['post_id'])) {
+    if (is_datas_set(array($_POST['action'], $_POST['post_id']))) {
         $action = $_POST['action'];
         $post_id = $_POST['post_id'];
         $user_id = $_SESSION['id'];
