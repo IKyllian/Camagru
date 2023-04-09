@@ -6,6 +6,7 @@ $statements = [
         username  VARCHAR(100) NOT NULL, 
         email VARCHAR(128) NOT NULL, 
         password VARCHAR(100) NOT NULL,
+        token VARCHAR(100) DEFAULT NULL,
         active_notif tinyint(1) DEFAULT 1,
         active tinyint(1) DEFAULT 0,
         activation_code varchar(255) NOT NULL,

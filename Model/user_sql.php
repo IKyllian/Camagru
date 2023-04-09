@@ -16,12 +16,25 @@ function get_condition_type(mixed $condition_value) {
         return null;
 }
 
+function check_user_token($user_id, $token) {
+    $sql = "SELECT user_id FROM users WHERE user_id=:user_id and token=:token";
+    $stmt = db_connection()->prepare($sql);
+    $stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+    $stmt->bindValue(":token", $token, PDO::PARAM_STR);
+    $result = $stmt->execute();
+    if (false === $result) {
+        throw new Exception(implode(' ', $stmt->errorInfo()));
+    }
+    return $stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 function find_user(array $fields, string $condition_field, mixed $condition_value) {
     $condition_type = get_condition_type($condition_value);
     if ($condition_type === null)
         return false;
     $fields_to_string = implode(", ", $fields);
-    $stmt = db_connection()->prepare("SELECT {$fields_to_string} FROM users WHERE {$condition_field} = :{$condition_field}");
+    $sql = "SELECT {$fields_to_string} FROM users WHERE {$condition_field} = :{$condition_field}";
+    $stmt = db_connection()->prepare($sql);
     $stmt->bindValue(":{$condition_field}", $condition_value, $condition_type);
     $result = $stmt->execute();
     if (false === $result) {
@@ -30,14 +43,25 @@ function find_user(array $fields, string $condition_field, mixed $condition_valu
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
+function create_user_token($user_id, $new_token) {
+    $sql = "UPDATE users SET token=:token WHERE user_id=:user_id";
+    $statement = db_connection()->prepare($sql);
+    $statement->bindValue(':token', $new_token, PDO::PARAM_STR);
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    return $statement->execute();
+}
+
 function user_signin(string $username, string $password) {
     $result = find_user(array("user_id, password, active"), "username", $username);
     if ($result !== false) {
         if (password_verify($password, $result['password'])) {
             if (is_user_active($result)) {
+                $new_token = hash("sha256", bin2hex(random_bytes(16))); 
+                create_user_token($result['user_id'], $new_token);
                 session_regenerate_id();
                 $_SESSION['logged'] = TRUE;
                 $_SESSION['name'] = $username;
+                $_SESSION['token'] = $new_token;
                 $_SESSION['id'] = $result['user_id'];
                 redirect_to("/index.php");
             } else {

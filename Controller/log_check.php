@@ -3,6 +3,6 @@
     if (session_status() === PHP_SESSION_NONE)
         session_start();
 
-    if (!isset($_SESSION['logged']) || !isset($_SESSION['id']) || !find_user(array('user_id'), 'user_id', $_SESSION['id']))
+    if (!isset($_SESSION['logged']) || !isset($_SESSION['token']) || !isset($_SESSION['id']) || !check_user_token($_SESSION['id'], $_SESSION['token']))
         require(__DIR__."/logout.php");
 ?>
