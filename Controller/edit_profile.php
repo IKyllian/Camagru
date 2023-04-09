@@ -3,7 +3,7 @@
     require_once(__DIR__."/../Model/user_sql.php");
     require_once(__DIR__."/parse.php");
 
-    if (!is_datas_set(array($_POST['username'], $_POST['email'], $_POST['notif']))) {
+    if (!is_datas_set($_POST, array('username', 'email', 'notif'))) {
         redirect_to("/View/edit_profile.php", "error_msg", "Please complete the form");
     }
     

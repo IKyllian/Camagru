@@ -3,7 +3,7 @@
     require_once(__DIR__."/../Model/user_sql.php");
     require_once(__DIR__."/parse.php");
 
-    if (!is_datas_set(array($_POST['current_password'], $_POST['new_password'], $_POST['confirm_password']))) {
+    if (!is_datas_set($_POST, array('current_password', 'new_password', 'confirm_password'))) {
         redirect_to("/View/edit_profile.php", "error_msg", "Please complete the form");
     }
     

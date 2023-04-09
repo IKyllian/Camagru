@@ -2,7 +2,7 @@
     require_once(__DIR__."/log_check.php");
     require_once(__DIR__."/../Model/user_sql.php");
 
-    if (!is_datas_set(array($_POST['email']))) {
+    if (!is_datas_set($_POST, array('email'))) {
         echo 'parse error';
         return ;
     }

@@ -23,7 +23,6 @@ $statements = [
             FOREIGN KEY(user_id) 
             REFERENCES users(user_id) 
             ON DELETE RESTRICT
-            ON UPDATE RESTRICT
     );',
     'CREATE TABLE IF NOT EXISTS comments (
         comment_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
@@ -34,13 +33,11 @@ $statements = [
         CONSTRAINT comment_fk_post
             FOREIGN KEY(post_id)
             REFERENCES posts(post_id) 
-            ON DELETE RESTRICT
-            ON UPDATE RESTRICT,
+            ON DELETE CASCADE,
         CONSTRAINT comment_fk_user 
             FOREIGN KEY(user_id) 
             REFERENCES users(user_id) 
             ON DELETE RESTRICT
-            ON UPDATE RESTRICT
     );',
     'CREATE TABLE IF NOT EXISTS likes (
         like_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -49,14 +46,12 @@ $statements = [
         CONSTRAINT like_fk_post 
             FOREIGN KEY(post_id) 
             REFERENCES posts(post_id) 
-            ON DELETE RESTRICT
-            ON UPDATE RESTRICT,
+            ON DELETE CASCADE,
         CONSTRAINT like_fk_user 
             FOREIGN KEY(user_id) 
             REFERENCES users(user_id) 
             ON DELETE RESTRICT
-            ON UPDATE RESTRICT
-    );'
+    );',
 ];
 
 require_once 'Connection.php';

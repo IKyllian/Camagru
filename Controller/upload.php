@@ -4,7 +4,7 @@
     require_once(__DIR__.'/../Model/user_sql.php');
     require_once(__DIR__.'/parse.php');
 
-    if (is_datas_set(array($_POST['img_data'], $_POST['filters']))) { 
+    if (is_datas_set($_POST, array('img_data', 'filters'))) { 
         $filters_path = json_decode($_POST['filters']);
         $img_datas = $_POST['img_data'];
         $img_id = $_POST['img_id'];
@@ -43,12 +43,12 @@
             imagedestroy($img_created);
 
             if (create_user_img($_SESSION['id'], $img_path))
-                echo "TRUE";
+                echo "./public/pictures/{$img_name}";
             else
-                echo "FALSE ON PDO EXEC";
+                echo "error";
         } else
-            echo "FALSE WRONG MIME TYPE";
+            echo "error";
     }  
     else
-        echo "FALSE NO DATAS";
+        echo "error";
 ?>

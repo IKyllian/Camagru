@@ -6,7 +6,7 @@
     require_once(__DIR__.'/../Model/post_sql.php');
     require_once(__DIR__.'/parse.php');
 
-    if (is_datas_set(array($_POST['comment'], $_POST['post_id']))) {
+    if (is_datas_set($_POST, array('comment', 'post_id'))) {
         $comment = string_parse($_POST['comment']);
         $post_id = $_POST['post_id']; // Check if number;
 

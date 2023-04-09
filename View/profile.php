@@ -12,6 +12,7 @@
     </head>
 
     <body>
+        <?php require_once(__DIR__.'/header.php') ?>
         <p> username: <?= $user['username'] ?></p>
         <p> email: <?= $user['email'] ?></p>
         <p> created at: <?= $date->format('d-m-Y') ?></p>

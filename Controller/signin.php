@@ -4,7 +4,7 @@
     require_once(__DIR__."/parse.php");
     session_start();
 
-    if (!is_datas_set(array($_POST['username'], $_POST['password']))) {
+    if (!is_datas_set($_POST, array('username', 'password'))) {
         redirect_to("/View/login.php", "error_msg", "Please complete the form");
     } 
 

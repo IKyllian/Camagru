@@ -14,8 +14,28 @@
     <head>
         <title>Home</title>
         <script type="module" src="./js/index.js"> </script>
+        <link rel="shortcut icon" href="#" />
         <style>
             canvas {
+                display: none;
+            }
+
+            #btn-save-container {
+                display: none;
+            }
+            .display-container {
+                position: relative;
+                width: 640px;
+                height: 480px;
+            }
+            .display-container > video {
+                position: absolute;
+            }
+            .display-container > img {
+                position: absolute;
+            }
+
+            #remove-file {
                 display: none;
             }
         </style>
@@ -31,23 +51,29 @@
             <img class="filter-btn" src="<?= $path . $filter ?>" width="100" height="100" />
         <?php endforeach; ?>
 
-        <form id="form-file">
-            <input type="file" name="file"  />
+        <form id="form-file" method="#">
+            <input id="input-file" type="file" name="file" />
+            <button id="remove-file"> Remove file </button>
         </form>
         
-        <button id="btn-cam"> Activate Camera </button>
         <div>
-            <video id="video">Video stream not available.</video>
-            <button id="btn-shoot">Take photo</button>
+            <div>
+                <div class="display-container">
+                    <video id="video">Video stream not available.</video>
+                    <canvas id="canvas" width="640" height="480"> </canvas>
+                    <img id="photo" alt="" />
+                </div>
+            </div>
+            <button id="btn-shoot" disabled>Take photo</button>
         </div>
+        <button id="btn-cam"> Activate Camera </button>
 
-        <canvas id="canvas" width="640" height="480"> </canvas>
-            <div class="output">
-            <img id="photo" alt="The screen capture will appear in this box." />
+        <ul id="picture-preview"> </ul>
+        <div id="btn-save-container">
+            <button id="save"> Save </button>
+            <button id="delete"> Delete </button> 
         </div>
-
-        <button id="save"> save </button> 
-
+       
     </body>
 </html>
 

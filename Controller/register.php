@@ -39,7 +39,7 @@
 
     }
 
-    if (!is_datas_set(array($_POST['username'], $_POST['email'], $_POST['password'])))
+    if (!is_datas_set($_POST, array('username', 'email', 'password')))
         redirect_to("/View/register.php", "error_msg", "Please complete the registration form");
 
     if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))

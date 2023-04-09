@@ -16,7 +16,7 @@ function check_post_exist(int $post_id) {
 }
 
 function get_post_by_id(int $post_id) {
-    $sql = "SELECT posts.*, users.username
+    $sql = "SELECT posts.*, users.username, users.user_id
             FROM posts
             INNER JOIN users
             ON posts.user_id=users.user_id
@@ -39,6 +39,14 @@ function get_all_post() {
     $statement->execute();
 
     return $statement->fetchAll();
+}
+
+function delete_post(int $post_id, int $user_id) {
+    $sql = "DELETE FROM posts WHERE post_id=:post_id and user_id=:user_id";
+    $statement = db_connection()->prepare($sql);
+    $statement->bindValue(':post_id', $post_id, PDO::PARAM_INT);
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    return $statement->execute();
 }
 
 ?>

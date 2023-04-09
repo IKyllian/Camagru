@@ -5,18 +5,12 @@
         $data = htmlspecialchars($data);
         return $data;
     }
-
-    function is_datas_set(array $datas) {
-        foreach ($datas as $data) {
-            if (!isset($data) || empty($data))
+    function is_datas_set(array $datas, array $keys) {
+        foreach ($keys as $key) {
+            if (!isset($datas[$key]) || empty($datas[$key]))
                 return 0;
         }
         return 1;
-    }
-
-    // function int_parse(int $) {
-
-    // }
-    
+    }    
     
 ?>

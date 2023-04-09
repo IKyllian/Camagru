@@ -6,7 +6,7 @@
     require_once(__DIR__.'/../Model/like_sql.php');
     require_once(__DIR__.'/parse.php');
 
-    if (is_datas_set(array($_POST['action'], $_POST['post_id']))) {
+    if (is_datas_set($_POST, array('action', 'post_id'))) {
         $action = $_POST['action'];
         $post_id = $_POST['post_id'];
         $user_id = $_SESSION['id'];

@@ -2,6 +2,9 @@
     require_once(__DIR__."/../Controller/post_preview.php");
 ?>
 
+<?php if (!$post): ?>
+<?php require_once(__DIR__."/404.php") ?>
+<?php else: ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,6 +14,7 @@
     </head>
 
     <body>
+        <?php require_once(__DIR__.'/header.php') ?>
        <img src="<?= $post['picture_path'] ?>" />
        <?php if (count($comments) > 0): ?>
             <ul>
@@ -34,3 +38,4 @@
         </form>
     </body>
 </html>
+<?php endif; ?>

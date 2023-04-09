@@ -21,6 +21,7 @@
     </head>
 
     <body>
+        <?php require_once(__DIR__.'/header.php') ?>
         <?php if ($error): ?>
             <p> <?= $error ?> </p>
         <?php endif; ?>
