@@ -11,8 +11,21 @@
         public $nb_likes;
     }
 
+    $page = 1;
+    $post_per_page = 4;
+    $post_nbr = get_posts_nbr();
+    $page_nbr = ceil($post_nbr/$post_per_page);
+
+    // if (isset($_GET['page']) && !empty($_GET['page'])) {
+    //     $get_value = intval($_GET['page']);
+    //     if ($get_value > 0 && $get_value <= $page_nbr) {
+    //         $page = $get_value;
+    //     }
+    // }
+
     $req_error = false;
-    $all_posts = get_all_post();
+    // $all_posts = get_posts_per_page($page, $post_per_page);
+    $all_posts = get_all_post($page, $post_per_page);
     $posts = array();
     
     foreach($all_posts as $item) {

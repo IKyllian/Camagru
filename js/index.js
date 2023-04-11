@@ -22,6 +22,8 @@ load_page(() => {
 	function reset_settings() {
 		filters = [];
 		clearphoto();
+		change_remove_file_display('none');
+		disable_filter_border();
 		file_uploaded = false;
 		if (cam_was_activated) {
 			navigator.mediaDevices.getUserMedia({ video: true, audio: false })
@@ -87,6 +89,14 @@ load_page(() => {
 		}
 	}
 
+	function disable_filter_border() {
+		let elmt = document.getElementsByClassName('filter-btn');
+		for (const item of elmt) {
+			if (item.style.border )
+				item.style.border = null;
+		}
+	}
+
 	function on_filter_click(e) {
 		const elem_path = e.target.attributes['src'].value
 		if (!filters.find(e => e === elem_path)) {
@@ -98,7 +108,7 @@ load_page(() => {
 				change_display_save_container('block');
 		} else {
 			filters = filters.filter(e => e !== elem_path);
-			e.target.style.border = "none";
+			e.target.style.border = null; 
 			if (filters.length < 1) {
 				active_shoot_btn(false);
 				change_display_save_container('none');
@@ -205,8 +215,6 @@ load_page(() => {
 		}
 	}
 
-	
-	
 	function savePict(img) {
 		let imgData = new FormData();
 		imgData.append('img_data', img.src);

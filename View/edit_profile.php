@@ -18,37 +18,54 @@
     <head>
         <title>Edit Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <script type="module" src="../js/profile.js"> </script> -->
+        <link rel="stylesheet" href="../css/edit_profile.css">
     </head>
 
     <body>
         <?php require_once(__DIR__.'/header.php') ?>
-        <?php if ($error): ?>
-            <p> <?= $error ?> </p>
-        <?php endif; ?>
-        <form method="post" action="../Controller/edit_profile.php">
-            <input type="text" name="username" value="<?= $user['username'] ?>" />
-            <input type="text" name="email" value="<?= $user['email'] ?>" />
-
-            <label for="enable"> Activé </label>
-            <input
-                name="notif"
-                type="radio"
-                value="enable"
-                <?php if ($user['active_notif']): ?>
-                    checked
-                <?php endif; ?>
-            />
-            <label for="disable"> Desactivé </label>
-            <input
-                name="notif"
-                type="radio"
-                value="disable"
-                <?php if (!$user['active_notif']): ?>
-                    checked
-                <?php endif; ?>
-            />
-            <input type="submit" />
-        </form>
+        <div class="page-container">
+            <div class="edit-wrapper">
+                <div class="edit-container">
+                    <p class="edit-title"> Edit Informations</p>
+                    <?php if ($error): ?>
+                        <p class="msg-error"> <?= $error ?> </p>
+                    <?php endif; ?>
+                    <form method="post" action="../Controller/edit_profile.php">
+                        <label>
+                            Username:
+                            <input type="text" name="username" value="<?= $user['username'] ?>" />
+                        </label>
+                        <label>
+                            Email:
+                            <input type="text" name="email" value="<?= $user['email'] ?>" />
+                        </label>
+                        <label>
+                            Notification:
+                            <div>
+                                <label for="enable"> Activé </label>
+                                <input
+                                    name="notif"
+                                    type="radio"
+                                    value="enable"
+                                    <?php if ($user['active_notif']): ?>
+                                        checked
+                                    <?php endif; ?>
+                                />
+                                <label for="disable"> Desactivé </label>
+                                <input
+                                    name="notif"
+                                    type="radio"
+                                    value="disable"
+                                    <?php if (!$user['active_notif']): ?>
+                                        checked
+                                    <?php endif; ?>
+                                />
+                            </div>
+                        </label>
+                        <input type="submit" value="Confirm Informations" />
+                    </form>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

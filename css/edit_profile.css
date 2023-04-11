@@ -1,0 +1,57 @@
+@import "./index.css";
+
+.edit-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.edit-title {
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+.msg-error {
+    color: red;
+}
+
+.edit-container {
+    height: 400px;
+    width: 400px;
+    background-color: blanchedalmond;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 7px;
+}
+
+.edit-container > form {
+    display: flex;
+    flex-direction: column;
+    gap: 17px;
+    font-size: 17px;
+}
+
+.edit-container > form > label {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.edit-container > form > label > input {
+    all: unset;
+    padding: 5px;
+    border-bottom: 1px solid grey;
+    cursor: text;
+}
+
+.edit-container > form > input {
+    all: unset;
+    padding: 5px;
+    border: 1px solid grey;
+    cursor: pointer;
+    text-align: center;
+}

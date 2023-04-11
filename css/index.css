@@ -1,0 +1,27 @@
+@font-face {
+    font-family: Lato;
+    src: url("../public/fonts/Lato/Lato-Regular.ttf");
+    font-display: swap;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: Lato;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-container {
+    flex-grow: 1;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+p, span, a {
+    margin: 0;
+}

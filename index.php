@@ -46,7 +46,7 @@
         <?php if ($status_img): ?>
             <p> <?php echo $status_img ?>  </p>
         <?php endif; ?>
-
+            
         <?php foreach($filters as $filter): ?>
             <img class="filter-btn" src="<?= $path . $filter ?>" width="100" height="100" />
         <?php endforeach; ?>

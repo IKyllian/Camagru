@@ -12,6 +12,9 @@
     $user_id = $_SESSION['id'];
     $current_user = find_user(array("user_id, username, email"), "user_id", $user_id);
 
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+        redirect_to("/View/edit_profile.php", "error_msg", "Email is not valid");
+
     if (!$current_user) 
         require(__DIR__."/logout.php");
 

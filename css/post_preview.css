@@ -1,0 +1,125 @@
+@import "./index.css";
+
+.preview-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+i {
+    cursor: pointer;
+}
+
+.preview-container {
+    margin: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    height: 90%;
+    width: 70vw;
+}
+
+.img-wrapper {
+    height: 100%;
+}
+
+.img-wrapper > img {
+    height: 100%;
+    width: 100%;
+}
+
+.right-preview {
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 2;
+    align-items: stretch;
+    gap: 5px;
+    width: 100%;
+}
+
+.header-infos {
+    padding: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid black;
+}
+
+#delete-btn {
+    color: red;
+}
+
+.post-owner > p {
+    padding: 5px;
+}
+
+.comment-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5px;
+    height: 100%;
+    gap: 5px;
+}
+
+.no-comments {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.comment-section > ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-grow: 1;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.comment-section > ul > li {
+    display: flex;
+    flex-direction: column;
+    word-break: break-all;
+}
+
+.comment-sender {
+    font-weight: bold;
+}
+
+.comment-content {
+    font-size: 14px;
+}
+
+.likes-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 3px;
+}
+
+#btn-unlike {
+    color: red;
+}
+
+.comment-section > form {
+    border-top: 1px solid black;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.comment-section > form > .comment-input {
+    all: unset;
+    padding: 7px 5px 0 5px;
+    font-size: 18px;
+}
+
+.comment-section > form > button {
+    all: unset;
+}

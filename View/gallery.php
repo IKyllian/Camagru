@@ -7,29 +7,40 @@
     <head>
         <title>Gallery</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/gallery.css">
+        <script src="https://kit.fontawesome.com/f9678243a8.js" crossorigin="anonymous"></script>
         <script type="module" src="../js/gallery.js"> </script>
     </head>
 
     <body>
         <?php require_once(__DIR__.'/header.php') ?>
-        <?php if ($req_error): ?>
+        <!-- <?php if ($req_error): ?>
             <p> Error while request </p>
-        <?php endif; ?>
-
-        <?php foreach($posts as $post): ?>
-            <div id="post-<?= $post->post_data['post_id']?>">
-                <p> <?= $post->post_data['username'] ?> </p>
-                <a href="post_preview.php?post_id=<?= $post->post_data['post_id']?>" >
-                    <img src="<?= $post->post_data['picture_path'] ?>" />
-                    <div>
-                        <span> comments: <?= $post->nb_comments ?> </span>
-                        <span> like: <?= $post->nb_likes ?> </span>
-                    </div>
-                </a>
-                <?php if ($post->post_data['user_id'] === $_SESSION['id']): ?>
-                    <button class='delete-btn' post-id="<?= $post->post_data['post_id']?>"> Delete post </button>
-                <?php endif; ?>
+        <?php endif; ?> -->
+            
+        <div class="page-container">
+            <div class="gallery-wrapper">
+                <div class="gallery-container">
+                    <?php foreach($posts as $post): ?>
+                        <div class="post-item" id="post-<?= $post->post_data['post_id']?>">
+                            <a href="post_preview.php?post_id=<?= $post->post_data['post_id']?>" >
+                                <img src="<?= $post->post_data['picture_path'] ?>" />
+                                <div class="hover-post-background"> </div>
+                                <div class="post-infos">
+                                    <div>
+                                        <i class="fas fa-heart fa-lg"></i>
+                                        <span> <?= $post->nb_likes ?>  </span>
+                                    </div>
+                                    <div>
+                                        <i class="fas fa-comment fa-lg"></i>
+                                        <span> <?= $post->nb_comments ?>  </span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
             </div>
-        <?php endforeach; ?>
+        </div>
     </body>
 </html>

@@ -11,12 +11,7 @@
 
         $img_datas= str_replace("data:image/jpeg;base64,","",$img_datas);
         $img_datas = base64_decode($img_datas);
-
-        // if (filesize($img_datas) <= 0) {
-        //     echo ('Uploaded file has no contents.');
-        //     return ;
-        // }
-
+        
         $file_infos = finfo_open();
         $mime_type = finfo_buffer($file_infos, $img_datas, FILEINFO_MIME_TYPE);
         

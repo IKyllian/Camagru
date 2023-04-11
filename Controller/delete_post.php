@@ -2,6 +2,7 @@
     require_once(__DIR__.'/log_check.php');
     require_once(__DIR__.'/parse.php');
     require_once(__DIR__.'/../Model/post_sql.php');
+    require_once(__DIR__.'/redirect.php');
 
     if (!is_datas_set($_POST, array('post_id'))) {
         echo 'error';
@@ -22,6 +23,4 @@
             echo 'error';
         }
     }
-
-
 ?>

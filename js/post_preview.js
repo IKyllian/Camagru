@@ -5,9 +5,30 @@ load_page(() => {
     let btn_unlike = null;
     let form = document.getElementById('comment-form');
     let nb_like_text = document.getElementById('nb_like');
+    let delete_btn = document.getElementById('delete-btn');
 
     create_event_listener(form, 'submit', submit_comment);
+    create_event_listener(delete_btn, 'click', delete_post)
     like_events();
+
+    function delete_post() {
+        let post_id = delete_btn.getAttribute('post-id');
+        if (post_id) {
+            let postData = new FormData();
+            postData.append('post_id', +post_id);
+            let XHR = new XMLHttpRequest();
+            XHR.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    if (this.responseText === 'success') {
+                        window.location.replace("http://localhost:3000/View/gallery.php");
+                    }
+                    console.log(this.responseText);
+                }
+            };
+            XHR.open('POST', '../Controller/delete_post.php', true);
+            XHR.send(postData);
+        }
+    }
     
     function like_events() {
         btn_like = document.getElementById('btn-like');
@@ -45,8 +66,9 @@ load_page(() => {
             XHR.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
                     if (this.responseText == "success") {
+                        btn_like.classList.remove("far");
+                        btn_like.classList.add("fas");
                         btn_like.id = 'btn-unlike';
-                        btn_like.textContent = 'unlike';
                         if (nb_like_text) {
                             nb_like_text.textContent = +nb_like_text.textContent + 1;
                         }
@@ -70,8 +92,9 @@ load_page(() => {
             XHR.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
                     if (this.responseText == "success") {
+                        btn_unlike.classList.remove("fas");
+                        btn_unlike.classList.add("far");
                         btn_unlike.id = 'btn-like';
-                        btn_unlike.textContent = 'like';
                         nb_like_text.textContent = +nb_like_text.textContent - 1;
                         btn_unlike.removeEventListener('click', removeLike);
                         like_events();
