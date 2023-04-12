@@ -15,30 +15,11 @@
         <title>Home</title>
         <script type="module" src="./js/index.js"> </script>
         <link rel="shortcut icon" href="#" />
-        <style>
-            canvas {
-                display: none;
-            }
-
-            #btn-save-container {
-                display: none;
-            }
-            .display-container {
-                position: relative;
-                width: 640px;
-                height: 480px;
-            }
-            .display-container > video {
-                position: absolute;
-            }
-            .display-container > img {
-                position: absolute;
-            }
-
-            #remove-file {
-                display: none;
-            }
-        </style>
+        <script src="https://kit.fontawesome.com/f9678243a8.js" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="./css/home.css" />
+        <!-- <style>
+            
+        </style> -->
     </head>
 
     <body>
@@ -46,34 +27,52 @@
         <?php if ($status_img): ?>
             <p> <?php echo $status_img ?>  </p>
         <?php endif; ?>
-            
-        <?php foreach($filters as $filter): ?>
-            <img class="filter-btn" src="<?= $path . $filter ?>" width="100" height="100" />
-        <?php endforeach; ?>
+        <div class="page-container">
+            <div class="page-wrapper">
+                <div class="camera-container">
+                    <div class="filters-container">
+                        <?php foreach($filters as $filter): ?>
+                            <img class="filter-btn" src="<?= $path . $filter ?>" width="100" height="100" />
+                        <?php endforeach; ?>
+                    </div>
+                    <div>
+                        <div class="display-container">
+                            <video id="video">Video stream not available.</video>
+                            <canvas id="canvas" width="640" height="480"> </canvas>
+                            <img id="photo" alt="" />
+                        </div>
+                    </div>
+                    <div class="camera-buttons">
+                        <form id="form-file" method="#">
+                            <label id="input-label">
+                                Upload
+                                <i class="fas fa-upload"></i>
+                                <input id="input-file" type="file" name="file" />
+                            </label>
+                            
+                            <button id="remove-file"> Remove file </button>
+                        </form>
 
-        <form id="form-file" method="#">
-            <input id="input-file" type="file" name="file" />
-            <button id="remove-file"> Remove file </button>
-        </form>
-        
-        <div>
-            <div>
-                <div class="display-container">
-                    <video id="video">Video stream not available.</video>
-                    <canvas id="canvas" width="640" height="480"> </canvas>
-                    <img id="photo" alt="" />
+                        <div id="btn-save-container">
+                            <button id="delete-post"> 
+                                <i class="fas fa-xmark"></i>
+                            </button> 
+                            <button id="save-post">
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                        <button id="btn-shoot" disabled>
+                            <i class="fas fa-camera"></i>
+                        </button>
+                        <button id="btn-cam"> Activate Camera </button>
+                    </div>
+                </div>
+                <div class="pictures-wrapper">
+                    <p> Pictures taken </p>
+                    <ul id="picture-preview"> </ul>
                 </div>
             </div>
-            <button id="btn-shoot" disabled>Take photo</button>
         </div>
-        <button id="btn-cam"> Activate Camera </button>
-
-        <ul id="picture-preview"> </ul>
-        <div id="btn-save-container">
-            <button id="save"> Save </button>
-            <button id="delete"> Delete </button> 
-        </div>
-       
     </body>
 </html>
 

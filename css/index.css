@@ -15,15 +15,17 @@ body {
     font-family: Lato;
     display: flex;
     flex-direction: column;
+    background-color: #e3e0f2;
 }
 
 .page-container {
     flex-grow: 1;
+    background-color: #e3e0f2;
 }
 
 a {
     text-decoration: none;
-    color: black;
+    color: #FFFBF5;
 }
 
 p, span, a {

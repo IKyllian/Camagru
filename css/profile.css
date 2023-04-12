@@ -17,7 +17,8 @@
 .profile-container {
     height: 400px;
     width: 400px;
-    background-color: blanchedalmond;
+    background-color: #7286D3;
+    color: #FFF2F2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -50,7 +51,13 @@
 }
 
 .buttons-wrapper > a {
-    border: 1px solid black;
+    border: 1px solid #8EA7E9;
     border-radius: 5px;
-    padding: 5px;
+    padding: 8px;
+    height: 100%;
+}
+
+.buttons-wrapper > a:hover {
+    color: #7286D3;
+    background-color: #FFF2F2;
 }

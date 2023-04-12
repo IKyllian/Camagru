@@ -20,7 +20,8 @@
 .edit-container {
     height: 400px;
     width: 400px;
-    background-color: blanchedalmond;
+    background-color: #7286D3;
+    color: #FFF2F2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -44,14 +45,19 @@
 .edit-container > form > label > input {
     all: unset;
     padding: 5px;
-    border-bottom: 1px solid grey;
+    border-bottom: 1px solid #8EA7E9;
     cursor: text;
 }
 
 .edit-container > form > input {
     all: unset;
-    padding: 5px;
-    border: 1px solid grey;
+    padding: 8px;
+    border: 1px solid #8EA7E9;
     cursor: pointer;
     text-align: center;
+}
+
+.edit-container > form > input:hover {
+    color: #7286D3;
+    background-color: #FFF2F2;
 }

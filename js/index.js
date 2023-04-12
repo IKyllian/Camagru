@@ -5,8 +5,8 @@ load_page(() => {
 	let video = document.getElementById("video");
 	let canvas = document.getElementById("canvas");
 	let photo = document.getElementById("photo");
-	let save = document.getElementById("save");
-	let delete_pict = document.getElementById("delete");
+	let save = document.getElementById("save-post");
+	let delete_pict = document.getElementById("delete-post");
 	let form_file_upload = document.getElementById("form-file");
 	let remove_file = document.getElementById("remove-file");
 	let shoot_btn = document.getElementById("btn-shoot");
@@ -23,6 +23,7 @@ load_page(() => {
 		filters = [];
 		clearphoto();
 		change_remove_file_display('none');
+		change_display_save_container('none');
 		disable_filter_border();
 		file_uploaded = false;
 		if (cam_was_activated) {
@@ -51,7 +52,7 @@ load_page(() => {
 	create_event_listener(shoot_btn, 'click', (e) => {
 		e.preventDefault();
 		takepicture();
-		change_display_save_container("block");
+		change_display_save_container("flex");
 	});
 	create_event_listener(save, 'click', () => {
 		savePict(photo);
@@ -76,16 +77,28 @@ load_page(() => {
 	}
 
 	function change_remove_file_display(value) {
+		let label = document.getElementById('input-label');
+		if (value == 'none') {
+			if (label)
+				label.style.display = 'flex';
+		} else {
+			if (label)
+			label.style.display = 'none';
+		}
 		if (remove_file)
 			remove_file.style.display = value;
 	}
 
 	function active_shoot_btn(status) {
 		if (shoot_btn) {
-			if (status)
+			if (status) {
 				shoot_btn.removeAttribute('disabled');
-			else
+				shoot_btn.style.cursor = "pointer";
+			}
+			else {
 				shoot_btn.setAttribute('disabled', '');
+				shoot_btn.style.cursor = "default"
+			}		
 		}
 	}
 
@@ -105,7 +118,7 @@ load_page(() => {
 			if (localstream)
 				active_shoot_btn(true);
 			if (file_uploaded)
-				change_display_save_container('block');
+				change_display_save_container('flex');
 		} else {
 			filters = filters.filter(e => e !== elem_path);
 			e.target.style.border = null; 
@@ -173,9 +186,9 @@ load_page(() => {
 				}
 				new_img.src =  URL.createObjectURL(file);
 				if (filters.length > 0)
-					change_display_save_container("block");
+					change_display_save_container("flex");
 				disable_cam();
-				change_remove_file_display('block');
+				change_remove_file_display('flex');
 				file_uploaded = true;
 			}
 		} else 
@@ -247,6 +260,14 @@ load_page(() => {
 
 	function change_display_save_container(value) {
 		let elmt = document.getElementById('btn-save-container');
+		
+		if (value == 'none') {
+			if (shoot_btn)
+				shoot_btn.style.display = 'flex';
+		} else {
+			if (shoot_btn)
+				shoot_btn.style.display = 'none';
+		}
 		if (elmt)
 			elmt.style.display = value;
 	}
@@ -260,7 +281,7 @@ load_page(() => {
 			const data = canvas.toDataURL("image/jpeg");
 			photo.setAttribute("src", data);
 			if (filters.length > 0)
-				change_display_save_container("block");
+				change_display_save_container("flex");
 			video.srcObject = null;
 			enable_cam_display(false);
 		} else {

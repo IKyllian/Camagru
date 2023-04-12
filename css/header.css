@@ -1,8 +1,8 @@
 @import "./index.css";
 
 .header {
-    background-color: bisque;
-    padding: 10px 5px;
+    background-color: #7286D3;
+    padding: 20px 5px;
     margin: 0;
     display: flex;
     justify-content: space-between;
