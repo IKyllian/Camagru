@@ -40,6 +40,15 @@
                         </div>
                     <?php endforeach; ?>
                 </div>
+                <div class="pagination">
+                    <?php for($idx = 1; $idx <= $page_nbr; $idx++): ?>
+                        <?php if ($idx == $page): ?>
+                            <span> <?= $idx ?> </span>
+                        <?php else: ?>
+                            <a href="/View/gallery.php?page=<?= $idx ?>"> <?= $idx ?> </a>
+                        <?php endif; ?>
+                    <?php endfor; ?>
+                </div>
             </div>
         </div>
     </body>

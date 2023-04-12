@@ -7,7 +7,7 @@
         <a href="/index.php" class="header-logo"> Camagru </a>
         <div class="header-links">
             <a href="/View/gallery.php"> Gallery </a>
-            <a href="/View/profile.php"> Profile </a>
+            <a href="/View/profile.php?id=<?=$_SESSION['id']?>"> Profile </a>
             <a href="/Controller/logout.php"> Logout </a>
         </div>
     </div>

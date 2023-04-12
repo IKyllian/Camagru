@@ -40,6 +40,6 @@
     }
 
     change_user_field($user_id, "active_notif", $notif);
-    redirect_to("/View/profile.php");
+    redirect_to("/View/profile.php?id={$user_id}");
     
 ?>

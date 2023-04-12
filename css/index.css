@@ -4,6 +4,10 @@
     font-display: swap;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -24,4 +28,33 @@ a {
 
 p, span, a {
     margin: 0;
+}
+
+.pagination {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.pagination > a {
+    width: 35px;
+    height: 35px;
+    border: 0.7px solid grey;
+    color: cornflowerblue;
+    display: flex;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination > span {
+    width: 35px;
+    height: 35px;
+    color: white;
+    border: 0.7px solid grey;
+    background-color: cornflowerblue;
+    display: flex;
+    border-radius: 5px;
+    align-items: center;
+    justify-content: center;
 }

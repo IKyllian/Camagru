@@ -1,8 +1,12 @@
 @import "./index.css";
 
 .gallery-wrapper {
+    height: 100%;
+    padding: 10px 0;
+    box-sizing: border-box;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
 }
 

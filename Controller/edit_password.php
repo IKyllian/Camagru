@@ -26,6 +26,6 @@
         redirect_to("/View/edit_password.php", "error_msg", "New password must be different from the current one");
     
     change_user_field($user_id, "password", password_hash($new_password, PASSWORD_DEFAULT));
-    redirect_to("/View/profile.php");
+    redirect_to("/View/profile.php?id={$user_id}");
     
 ?>

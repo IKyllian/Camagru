@@ -29,14 +29,16 @@ function get_post_by_id(int $post_id) {
     return $statement->fetch();
 }
 
-function get_posts_per_page($current_page, $post_per_page) {
+function get_posts_per_page($skip, $post_per_page) {
     $sql = "SELECT posts.*, users.username
             FROM posts
-            LIMIT $post_per_page, ($current_page - 1)*$post_per_page
             INNER JOIN users
-            ON posts.user_id=users.user_id";
+            ON posts.user_id=users.user_id
+            LIMIT :off, :lim";
 
     $statement = db_connection()->prepare($sql);
+    $statement->bindValue(':off', $skip, PDO::PARAM_INT);
+    $statement->bindValue(':lim', $post_per_page, PDO::PARAM_INT);
     $statement->execute();
 
     return $statement->fetchAll();
@@ -49,6 +51,23 @@ function get_all_post() {
             ON posts.user_id=users.user_id";
 
     $statement = db_connection()->prepare($sql);
+    $statement->execute();
+
+    return $statement->fetchAll();
+}
+
+function get_post_from_user($user_id, $skip, $post_per_page) {
+    $sql = "SELECT posts.*, users.username
+            FROM posts
+            INNER JOIN users
+            ON posts.user_id=users.user_id
+            WHERE posts.user_id=:user_id
+            LIMIT :off, :lim";
+
+    $statement = db_connection()->prepare($sql);
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    $statement->bindValue(':off', $skip, PDO::PARAM_INT);
+    $statement->bindValue(':lim', $post_per_page, PDO::PARAM_INT);
     $statement->execute();
 
     return $statement->fetchAll();
