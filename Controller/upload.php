@@ -4,6 +4,17 @@
     require_once(__DIR__.'/../Model/user_sql.php');
     require_once(__DIR__.'/parse.php');
 
+    function resize_filter(string $filter_path) {
+        $img_filter = imagecreatefrompng($filter_path);
+        list($width, $height) = getimagesize($filter_path);
+        $imageLayer = imagecreatetruecolor(640, 480);
+        imagesavealpha($imageLayer, true);
+        $color = imagecolorallocatealpha($imageLayer, 0, 0, 0, 127);
+        imagefill($imageLayer, 0, 0, $color);
+        imagecopyresampled($imageLayer, $img_filter, 0, 0, 0, 0, 640, 480, $width, $height);
+        return $imageLayer;
+    }
+
     if (is_datas_set($_POST, array('img_data', 'filters'))) { 
         $filters_path = json_decode($_POST['filters']);
         $img_datas = $_POST['img_data'];
@@ -26,16 +37,8 @@
                     if (file_exists($filter_path)) {
                         $filter_mime_type = mime_content_type($filter_path);
                         if ($filter_mime_type === 'image/png') {
-                            $img_filter = imagecreatefrompng($filter_path);
-                            // width="640" height="480"
-                            list($width, $height) = getimagesize($filter_path);
-                            $imageLayer = imagecreatetruecolor(640, 480);
-                            imagesavealpha($imageLayer, true);
-                            $color = imagecolorallocatealpha($imageLayer, 0, 0, 0, 127);
-                            imagefill($imageLayer, 0, 0, $color);
-                            // $imageLayer = imagecreatetruecolor(640, 480);
-                            imagecopyresampled($imageLayer, $img_filter, 0, 0, 0, 0, 640, 480, $width, $height);
-                            imagecopy($img_created, $imageLayer, 10, 10, 0, 0, $width, $height);
+                            $filter_img = resize_filter($filter_path);
+                            imagecopy($img_created, $filter_img, 0, 0, 0, 0, 640, 480);
                         }
                     }
                 }
