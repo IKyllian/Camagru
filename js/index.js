@@ -294,7 +294,6 @@ load_page(() => {
 			new_canvas.width = width;
 			new_canvas.height = height;
 			new_canvas.setAttribute('id', `canvas-${filterId}`);
-			new_canvas.setAttribute('id', `canvas-filter`);
 			new_canvas.setAttribute('class', 'filters-canvas');
 
 			const ctx = new_canvas.getContext("2d");
