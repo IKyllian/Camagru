@@ -17,9 +17,6 @@
         <link rel="shortcut icon" href="#" />
         <script src="https://kit.fontawesome.com/f9678243a8.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="./css/home.css" />
-        <!-- <style>
-            
-        </style> -->
     </head>
 
     <body>
@@ -31,12 +28,16 @@
             <div class="page-wrapper">
                 <div class="camera-container">
                     <div class="filters-container">
-                        <?php foreach($filters as $filter): ?>
-                            <img class="filter-btn" src="<?= $path . $filter ?>" width="100" height="100" />
+                        <?php
+                            $i = 0;
+                            foreach($filters as $filter):
+                        ?>
+                            <img class="filter-btn" id="filter-<?=$i?>" src="<?= $path . $filter ?>" width="100" height="100" />
+                            <?php $i++ ?>
                         <?php endforeach; ?>
                     </div>
                     <div>
-                        <div class="display-container">
+                        <div class="display-container" id="cam-container">
                             <video id="video">Video stream not available.</video>
                             <canvas id="canvas" width="640" height="480"> </canvas>
                             <img id="photo" alt="" />
@@ -47,7 +48,7 @@
                             <label id="input-label">
                                 Upload
                                 <i class="fas fa-upload"></i>
-                                <input id="input-file" type="file" name="file" />
+                                <input id="input-file" type="file" name="file" accept="image/gif, image/jpg, image/jpeg, image/png" />
                             </label>
                             
                             <button id="remove-file"> Remove file </button>
@@ -75,6 +76,3 @@
         </div>
     </body>
 </html>
-
-   
-

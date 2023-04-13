@@ -8,6 +8,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
 .gallery-container {
@@ -15,6 +16,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
+    justify-content: center;
     gap: 20px;
     width: 95%;
     margin-top: 10px;

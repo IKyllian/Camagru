@@ -12,7 +12,7 @@
     }
 
     $page = 1;
-    $post_per_page = 4;
+    $post_per_page = 8;
     $post_nbr = get_posts_nbr();
     $page_nbr = ceil($post_nbr/$post_per_page);
 

@@ -11,10 +11,11 @@ load_page(() => {
 	let remove_file = document.getElementById("remove-file");
 	let shoot_btn = document.getElementById("btn-shoot");
 	let btn_cam = document.getElementById('btn-cam');
-	let filter_array = document.getElementsByClassName('filter-btn');
+	let filter_dom_array = document.getElementsByClassName('filter-btn');
 	let width = canvas.width;
 	let height = canvas.height;
 	let filters = [];
+	let img_src = null;
 	let localstream = null;
 	let cam_was_activated = false;
 	let file_uploaded = false;
@@ -25,6 +26,7 @@ load_page(() => {
 		change_remove_file_display('none');
 		change_display_save_container('none');
 		disable_filter_border();
+		delete_all_canvas_filter();
 		file_uploaded = false;
 		if (cam_was_activated) {
 			navigator.mediaDevices.getUserMedia({ video: true, audio: false })
@@ -55,14 +57,14 @@ load_page(() => {
 		change_display_save_container("flex");
 	});
 	create_event_listener(save, 'click', () => {
-		savePict(photo);
+		savePict();
 		reset_settings();
 	});
 	create_event_listener(delete_pict, 'click', () => {
 		reset_settings();
 	});
 
-	for (const filter of filter_array) {
+	for (const filter of filter_dom_array) {
 		create_event_listener(filter, 'click', on_filter_click);
 	}
 
@@ -94,10 +96,12 @@ load_page(() => {
 			if (status) {
 				shoot_btn.removeAttribute('disabled');
 				shoot_btn.style.cursor = "pointer";
+				shoot_btn.style.opacity = 1;
 			}
 			else {
 				shoot_btn.setAttribute('disabled', '');
-				shoot_btn.style.cursor = "default"
+				shoot_btn.style.cursor = "default";
+				shoot_btn.style.opacity = 0.5;
 			}		
 		}
 	}
@@ -111,9 +115,11 @@ load_page(() => {
 	}
 
 	function on_filter_click(e) {
-		const elem_path = e.target.attributes['src'].value
+		const target_element = e.target;
+		const elem_path = target_element.attributes['src'].value;
 		if (!filters.find(e => e === elem_path)) {
 			filters.push(elem_path);
+			add_canvas_filter(target_element);
 			e.target.style.border = "1px solid red";
 			if (localstream)
 				active_shoot_btn(true);
@@ -126,6 +132,7 @@ load_page(() => {
 				active_shoot_btn(false);
 				change_display_save_container('none');
 			}
+			delete_canvas_filter(target_element);
 		}
 	}
 
@@ -182,14 +189,16 @@ load_page(() => {
 					context.drawImage(new_img, 0, 0, width, height);
 					const data = canvas.toDataURL("image/jpeg");
 					photo.setAttribute("src", data);
+					img_src = data;
+					file_uploaded = true;
 					URL.revokeObjectURL(new_img.src);
 				}
-				new_img.src =  URL.createObjectURL(file);
+				new_img.src = URL.createObjectURL(file);
 				if (filters.length > 0)
 					change_display_save_container("flex");
 				disable_cam();
 				change_remove_file_display('flex');
-				file_uploaded = true;
+				
 			}
 		} else 
 			alert("Format not supported");
@@ -198,6 +207,7 @@ load_page(() => {
 	function remove_uploaded_file(e) {
 		e.preventDefault();
 		clearphoto();
+		img_src = null;
 		if (cam_was_activated)
 			enable_cam_display(true);
 		else
@@ -228,28 +238,31 @@ load_page(() => {
 		}
 	}
 
-	function savePict(img) {
-		let imgData = new FormData();
-		imgData.append('img_data', img.src);
-		imgData.append('img_id', img.id);
-		if (filters.length > 0) {
-			imgData.append('filters', JSON.stringify(filters));
-		}
-		let XHR = new XMLHttpRequest();
-		XHR.onreadystatechange = function () {
-			if (this.readyState === 4 && this.status === 200) {
-				console.log(this.responseText);
-				if (this.responseText !== 'error') {
-					add_pict_to_container(this.responseText);					
-				}
+	function savePict() {
+		if (img_src) {
+			let imgData = new FormData();
+			imgData.append('img_data', img_src);
+			if (filters.length > 0) {
+				imgData.append('filters', JSON.stringify(filters));
 			}
-			};
-		XHR.open('POST', '../Controller/upload.php', true);
-		XHR.send(imgData);
+			let XHR = new XMLHttpRequest();
+			XHR.onreadystatechange = function () {
+				if (this.readyState === 4 && this.status === 200) {
+					console.log(this.responseText);
+					if (this.responseText !== 'error') {
+						add_pict_to_container(this.responseText);					
+					}
+				}
+				};
+			XHR.open('POST', '../Controller/upload.php', true);
+			XHR.send(imgData);
+		}
+		
 	}
 	
 	function clearphoto() {
 		const context = canvas.getContext("2d");
+		img_src = null;
 		context.fillStyle = "#AAA";
 		context.fillRect(0, 0, canvas.width, canvas.height);
 	
@@ -271,7 +284,49 @@ load_page(() => {
 		if (elmt)
 			elmt.style.display = value;
 	}
-	
+
+	function add_canvas_filter(filter_target) {
+		let div_container = document.getElementById('cam-container');
+		let filterId = filter_target.attributes['id'].value;
+
+		if (div_container) {
+			let new_canvas = document.createElement('canvas');
+			new_canvas.width = width;
+			new_canvas.height = height;
+			new_canvas.setAttribute('id', `canvas-${filterId}`);
+			new_canvas.setAttribute('id', `canvas-filter`);
+			new_canvas.setAttribute('class', 'filters-canvas');
+
+			const ctx = new_canvas.getContext("2d");
+			ctx.drawImage(filter_target, 0, 0, width, height);
+
+			let canvas_wrapper = document.getElementById('canvas-wrapper');
+			if (canvas_wrapper) {
+				canvas_wrapper.appendChild(new_canvas);
+			} else {
+				let new_wrapper = document.createElement('div');
+				new_wrapper.setAttribute('id', `canvas-wrapper`);
+				new_wrapper.appendChild(new_canvas);
+				div_container.appendChild(new_wrapper);
+			}
+			
+		}
+	}
+
+	function delete_canvas_filter(filter_target) {
+		let filterId = filter_target.attributes['id'].value;
+		let canvas_filter = document.getElementById(`canvas-${filterId}`);
+		if (canvas_filter) {
+			canvas_filter.remove();
+		}
+	}
+
+	function delete_all_canvas_filter() {
+		var dom_filters = document.getElementById('canvas-wrapper');
+		if (dom_filters)
+			dom_filters.remove();
+	}
+
 	function takepicture() {
 		const context = canvas.getContext("2d");
 		if (width && height) {
@@ -280,6 +335,7 @@ load_page(() => {
 			context.drawImage(video, 0, 0, width, height);
 			const data = canvas.toDataURL("image/jpeg");
 			photo.setAttribute("src", data);
+			img_src = data;
 			if (filters.length > 0)
 				change_display_save_container("flex");
 			video.srcObject = null;
