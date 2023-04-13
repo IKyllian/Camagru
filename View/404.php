@@ -1,3 +1,6 @@
+<?php
+    require_once(__DIR__."/log_check.php");
+?>
 <!DOCTYPE html>
 <html>
     <head>
