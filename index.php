@@ -1,6 +1,5 @@
 <?php
     require_once(__DIR__.'/Controller/log_check.php');
-    // require 'setup.php';
 
     $path = "./public/filters/";
     $filters = array_diff(scandir($path), array('.', '..'));

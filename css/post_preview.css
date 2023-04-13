@@ -18,6 +18,7 @@ i {
     flex-direction: row;
     height: 90%;
     width: 70vw;
+    border-radius: 5px;
 }
 
 .img-wrapper {
@@ -36,15 +37,16 @@ i {
     align-items: stretch;
     gap: 5px;
     width: 100%;
+    background-color: #8EA7E9;
 }
 
 .header-infos {
-    padding: 5px;
+    padding: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid #7286D3;
 }
 
 #delete-btn {
@@ -86,6 +88,7 @@ i {
     display: flex;
     flex-direction: column;
     word-break: break-all;
+    /* padding-bottom: 10px; */
 }
 
 .comment-sender {
@@ -108,15 +111,18 @@ i {
 }
 
 .comment-section > form {
-    border-top: 1px solid black;
+    border-top: 1px solid #7286D3;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    /* padding-bottom: 5px; */
 }
 
 .comment-section > form > .comment-input {
     all: unset;
-    padding: 7px 5px 0 5px;
+    /* padding: 7px 7px 0 7px; */
+    padding: 10px 12px;
     font-size: 18px;
 }
 
