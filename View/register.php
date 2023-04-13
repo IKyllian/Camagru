@@ -17,28 +17,35 @@
     <head>
         <title>Register</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/form.css">
     </head>
 
     <body>
-        <h1> Register </h1>
-        <?php if ($form_error): ?>
-            <p> <?php echo $form_error ?> </p>
-        <?php endif; ?>
-        <form method="post" action="../Controller/register.php">
-            <label>
-                Username
-                <input type="text" name="username" />
-            </label>
-            <label>
-                Email
-                <input type="text" name="email" />
-            </label>
-            <label>
-                Password
-                <input type="password" name="password" />
-            </label>
-            <input type="submit" />
-        </form>
-        <a href="login.php"> Signin </a>
+        <div class="page-container">
+            <div class="form-wrapper">
+                <div class="form-container">
+                    <p class="form-title"> Register </p>
+                    <?php if ($form_error): ?>
+                        <p> <?php echo $form_error ?> </p>
+                    <?php endif; ?>
+                    <form method="post" action="../Controller/register.php">
+                        <label>
+                            Username
+                            <input type="text" name="username" />
+                        </label>
+                        <label>
+                            Email
+                            <input type="text" name="email" />
+                        </label>
+                        <label>
+                            Password
+                            <input type="password" name="password" />
+                        </label>
+                        <input type="submit" value="Signup" />
+                    </form>
+                    <a class="switch-btn" href="login.php"> Déjà un compte ? Connectez vous </a>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

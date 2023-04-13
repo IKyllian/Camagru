@@ -26,7 +26,7 @@
                     </div>
                     <div class="right-preview">
                         <div class="header-infos">
-                            <a href="/View/profile.php?id=<?=$post['user_id']?>"> <?= $post['username'] ?>  </a>
+                            <a class="post-owner" href="/View/profile.php?id=<?=$post['user_id']?>"> <?= $post['username'] ?>  </a>
                             <?php if ($post['user_id'] === $_SESSION['id']): ?>
                                 <i id="delete-btn" class="fas fa-trash" post-id="<?= $post['post_id']?>"></i>
                             <?php endif; ?>
@@ -36,7 +36,7 @@
                                 <ul>
                                     <?php foreach($comments as $comment): ?>
                                         <li>
-                                            <p class="comment-sender"> <?= $comment['username'] ?> </p>
+                                            <a href="/View/profile.php?id=<?=$post['user_id']?>" class="comment-sender"> <?= $comment['username'] ?> </a>
                                             <p class="comment-content"> <?= $comment['content'] ?> </p>
                                         </li>
                                     <?php endforeach; ?>

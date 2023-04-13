@@ -20,7 +20,8 @@
             
         <div class="page-container">
             <div class="gallery-wrapper">
-                <div class="gallery-container">
+                <?php if (count($posts) > 0): ?>
+                    <div class="gallery-container">
                     <?php foreach($posts as $post): ?>
                         <div class="post-item" id="post-<?= $post->post_data['post_id']?>">
                             <a href="post_preview.php?post_id=<?= $post->post_data['post_id']?>" >
@@ -39,16 +40,19 @@
                             </a>
                         </div>
                     <?php endforeach; ?>
-                </div>
-                <div class="pagination">
-                    <?php for($idx = 1; $idx <= $page_nbr; $idx++): ?>
-                        <?php if ($idx == $page): ?>
-                            <span> <?= $idx ?> </span>
-                        <?php else: ?>
-                            <a href="/View/gallery.php?page=<?= $idx ?>"> <?= $idx ?> </a>
-                        <?php endif; ?>
-                    <?php endfor; ?>
-                </div>
+                    </div>
+                    <div class="pagination">
+                        <?php for($idx = 1; $idx <= $page_nbr; $idx++): ?>
+                            <?php if ($idx == $page): ?>
+                                <span> <?= $idx ?> </span>
+                            <?php else: ?>
+                                <a href="/View/gallery.php?page=<?= $idx ?>"> <?= $idx ?> </a>
+                            <?php endif; ?>
+                        <?php endfor; ?>
+                    </div>
+                <?php else: ?>
+                    <p> No post yet </p>
+                <?php endif; ?>
             </div>
         </div>
     </body>

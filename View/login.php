@@ -19,45 +19,30 @@
     <head>
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <script type='module'>
-            let form = document.getElementById('login-form');
-
-            if (form) {
-                form.addEventListener('submit', e => {
-                    e.preventDefault();
-
-                    const formFields = e.target.elements;
-                    const username = formFields.namedItem("username").value;
-                    const password = formFields.namedItem("password").value;
-                    const username_parse = username.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-                    const password_parse = password.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-
-                    let commentData = new FormData();
-                    commentData.append('username', username_parse);
-                    commentData.append('password', password_parse);
-                    let XHR = new XMLHttpRequest();
-                    XHR.onreadystatechange = function () {
-                        if (this.readyState === 4 && this.status === 200) {
-                            console.log(this.responseText); }
-                        };
-                    XHR.open('POST', '../Controller/signin.php', true);
-                    XHR.send(commentData);
-                })
-            }
-        </script> -->
-
+        <link rel="stylesheet" href="../css/form.css">
     </head>
-
     <body>
-        <h1> Login </h1>
-        <?php if ($form_error != NULL): ?>
-            <p> <?php echo $form_error ?> </p>
-        <?php endif; ?>
-        <form id='login-form' method="post" action="../Controller/signin.php">
-            <input type="text" name="username" />
-            <input type="password" name="password" />
-            <input type="submit" />
-        </form>
-        <a href="register.php"> Signup </a> 
+        <div class="page-container">
+            <div class="form-wrapper">
+                <div class="form-container">
+                    <p class="form-title"> Login </p>
+                    <?php if ($form_error != NULL): ?>
+                        <p> <?php echo $form_error ?> </p>
+                    <?php endif; ?>
+                    <form id='login-form' method="post" action="../Controller/signin.php">
+                        <label>
+                            Username
+                            <input type="text" name="username" />
+                        </label>
+                        <label>
+                            Password
+                            <input type="password" name="password" />
+                        </label>            
+                        <input type="submit" value="Signin" />
+                    </form>
+                    <a class="switch-btn" href="register.php"> Pas de compte ? Créez en un </a> 
+                </div>
+            </div>
+        </div>
     </body>
 </html>

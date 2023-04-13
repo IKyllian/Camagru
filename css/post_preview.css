@@ -38,6 +38,7 @@ i {
     gap: 5px;
     width: 100%;
     background-color: #8EA7E9;
+    color: white;
 }
 
 .header-infos {
@@ -53,15 +54,16 @@ i {
     color: red;
 }
 
-.post-owner > p {
-    padding: 5px;
+.post-owner {
+    color: #18122B;
+    font-weight: bold;
 }
 
 .comment-section {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 5px;
+    padding: 10px;
     height: 100%;
     gap: 5px;
 }
@@ -93,6 +95,7 @@ i {
 
 .comment-sender {
     font-weight: bold;
+    color: #18122B;
 }
 
 .comment-content {

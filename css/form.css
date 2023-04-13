@@ -1,6 +1,6 @@
 @import "./index.css";
 
-.edit-wrapper {
+.form-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -8,8 +8,8 @@
     height: 100%;
 }
 
-.edit-title {
-    font-size: 20px;
+.form-title {
+    font-size: 23px;
     text-transform: uppercase;
 }
 
@@ -17,7 +17,7 @@
     color: red;
 }
 
-.edit-container {
+.form-container {
     height: 400px;
     width: 400px;
     background-color: #7286D3;
@@ -29,27 +29,27 @@
     border-radius: 7px;
 }
 
-.edit-container > form {
+.form-container > form {
     display: flex;
     flex-direction: column;
     gap: 17px;
     font-size: 17px;
 }
 
-.edit-container > form > label {
+.form-container > form > label {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-.edit-container > form > label > input {
+.form-container > form > label > input {
     all: unset;
     padding: 5px;
     border-bottom: 1px solid #8EA7E9;
     cursor: text;
 }
 
-.edit-container > form > input {
+.form-container > form > input {
     all: unset;
     padding: 8px;
     border: 1px solid #8EA7E9;
@@ -57,7 +57,12 @@
     text-align: center;
 }
 
-.edit-container > form > input:hover {
+.form-container > form > input:hover {
     color: #7286D3;
     background-color: #FFF2F2;
+}
+
+.switch-btn {
+    font-size: 14px;
+    color: #0A2647;
 }

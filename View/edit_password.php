@@ -18,15 +18,15 @@
     <head>
         <title>Edit Password</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/edit_profile.css">
+        <link rel="stylesheet" href="../css/form.css">
     </head>
 
     <body>
         <?php require_once(__DIR__.'/header.php') ?>
         <div class="page-container">
-            <div class="edit-wrapper">
-                <div class="edit-container">
-                    <p class="edit-title"> Reset Password</p>
+            <div class="form-wrapper">
+                <div class="form-container">
+                    <p class="form-title"> Reset Password</p>
                     <?php if ($error): ?>
                         <p> <?= $error ?> </p>
                     <?php endif; ?>
