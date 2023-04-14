@@ -19,7 +19,7 @@
     </head>
 
     <body>
-        <?php require_once(__DIR__.'/View/header.php') ?>
+        <?php require_once(__DIR__.'/View/header.html') ?>
         <?php if ($status_img): ?>
             <p> <?php echo $status_img ?>  </p>
         <?php endif; ?>

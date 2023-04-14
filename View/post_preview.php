@@ -17,7 +17,7 @@
     </head>
 
     <body>
-        <?php require_once(__DIR__.'/header.php') ?>
+        <?php require_once(__DIR__.'/header.html') ?>
         <div class="page-container">
             <div class="preview-wrapper">
                 <div class="preview-container">
