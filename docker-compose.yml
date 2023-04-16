@@ -1,32 +1,71 @@
 version: '3.8'
 
 services:
-  # PHP web server
+  # Web server NGINX
+  nginx:
+    image: nginx:latest
+    restart: always
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports: 
+      - "8080:80"
+    networks:
+      - internal
+    volumes:
+      - ./srcs/:/var/www/html/
+
+  # PHP + Packages
+  php:
+    image: php:8.2-fpm-alpine
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    networks:
+      - internal
+    volumes:
+      - ./srcs/:/var/www/html/
+    depends_on:
+      - phpmyadmin
 
   # MySQL database
   db:
     image: mysql
+    container_name: db
     restart: always
     environment:
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
       - "3306:3306"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - db:/var/lib/mysql
+    networks:
+      - internal
 
   # phpMyAdmin
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
     restart: always
+    links:
+      - db
     ports:
-      - "8080:80"
+      - "80:80"
     environment:
       PMA_HOST: ${PMA_HOST}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      PMA_PASSWORD: ${DB_ROOT_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - internal
 
 volumes:
   db:
+
+networks:
+  internal:
+    driver: bridge

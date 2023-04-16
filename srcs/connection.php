@@ -2,7 +2,7 @@
 function db_connection() {
 	$env = parse_ini_file('.env');
 
-	$host = $env["HOST"];
+	$host = $env["PMA_HOST"];
 	$db_name = $env["DB_NAME"];
 	$db_user = $env["DB_USER"];
 	$db_password = $env["DB_PASSWORD"];
@@ -12,7 +12,7 @@ function db_connection() {
 	try {
 		return new PDO($dsn, $db_user, $db_password);
 	} catch (PDOException $e) {
-		die($e->getMessage());
+		die("Error: ".$e->getMessage());
 	}
 }
 

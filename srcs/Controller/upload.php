@@ -31,24 +31,27 @@
 
             $img_created = imagecreatefromstring($img_datas);
 
-            if ($filters_path) {
-                foreach ($filters_path as $item) {
-                    $filter_path = __DIR__."/.".$item;
-                    if (file_exists($filter_path)) {
-                        $filter_mime_type = mime_content_type($filter_path);
-                        if ($filter_mime_type === 'image/png') {
-                            $filter_img = resize_filter($filter_path);
-                            imagecopy($img_created, $filter_img, 0, 0, 0, 0, 640, 480);
+            if ($img_created) {
+                if ($filters_path) {
+                    foreach ($filters_path as $item) {
+                        $filter_path = __DIR__."/.".$item;
+                        if (file_exists($filter_path)) {
+                            $filter_mime_type = mime_content_type($filter_path);
+                            if ($filter_mime_type === 'image/png') {
+                                $filter_img = resize_filter($filter_path);
+                                imagecopy($img_created, $filter_img, 0, 0, 0, 0, 640, 480);
+                            }
                         }
                     }
                 }
-            }
-            imagejpeg($img_created, $img_path);
-            imagedestroy($img_created);
-
-            if (create_user_img($_SESSION['id'], $img_path))
-                echo "./public/pictures/{$img_name}";
-            else
+                imagejpeg($img_created, $img_path);
+                imagedestroy($img_created);
+    
+                if (create_user_img($_SESSION['id'], $img_path))
+                    echo "./public/pictures/{$img_name}";
+                else
+                    echo "error";
+            } else
                 echo "error";
         } else
             echo "error";

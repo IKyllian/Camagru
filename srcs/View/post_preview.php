@@ -58,7 +58,7 @@
 
                             <form id="comment-form">
                                 <input type="hidden" name="post-id" value="<?= $post['post_id'] ?>" />
-                                <input class="comment-input" placeholder="Ajouter un commentaire..." type="text" name="comment" />
+                                <input class="comment-input" id="comment-input" placeholder="Ajouter un commentaire..." type="text" name="comment" />
                                 <button formmethod="post">
                                     <i class="far fa-paper-plane"></i>
                                 </button>

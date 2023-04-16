@@ -1,4 +1,4 @@
-USE my_db
+USE camagru_db
 
 CREATE TABLE IF NOT EXISTS users ( 
     user_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,

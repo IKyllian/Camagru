@@ -4,7 +4,7 @@ require_once(__DIR__.'/../connection.php');
 require_once(__DIR__.'/../Controller/user_utils.php');
 require_once(__DIR__.'/../Controller/redirect.php');
 
-function get_condition_type(mixed $condition_value) {
+function get_condition_type($condition_value) {
     $type = gettype($condition_value);
     if ($type === "string")
         return PDO::PARAM_STR;

@@ -38,7 +38,7 @@ load_page(() => {
         create_event_listener(btn_unlike, 'click', removeLike);
     }
     
-    function submit_comment(e) { // Faire en sorte de ne pas pouvoir spam le bouton envoyer
+    function submit_comment(e) {
         e.preventDefault();
     
         const formField = e.target.elements;
@@ -50,8 +50,12 @@ load_page(() => {
         let XHR = new XMLHttpRequest();
         XHR.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                console.log(this.responseText); }
-            };
+                let input = document.getElementById('comment-input');
+                if (input)
+                    input.value = "";
+                console.log(this.responseText);
+            }
+        };
         XHR.open('POST', '../Controller/add_comment.php', true);
         XHR.send(commentData);
     }
