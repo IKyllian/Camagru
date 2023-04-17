@@ -19,10 +19,14 @@ load_page(() => {
             let XHR = new XMLHttpRequest();
             XHR.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
-                    if (this.responseText === 'success') {
-                        window.location.replace("http://localhost:3000/View/gallery.php");
-                    }
-                    console.log(this.responseText);
+                    try {
+						let response_parse = JSON.parse(this.responseText);
+						if (response_parse.status) {
+                            window.location.replace(response_parse.location);
+                        }
+					} catch(e) {
+						console.log("Error " + e);
+					}
                 }
             };
             XHR.open('POST', '../Controller/delete_post.php', true);
@@ -40,7 +44,6 @@ load_page(() => {
     
     function submit_comment(e) {
         e.preventDefault();
-    
         const formField = e.target.elements;
         const comment = formField.namedItem("comment").value;
         const post_id = formField.namedItem("post-id").value;
@@ -50,14 +53,42 @@ load_page(() => {
         let XHR = new XMLHttpRequest();
         XHR.onreadystatechange = function () {
             if (this.readyState === 4 && this.status === 200) {
-                let input = document.getElementById('comment-input');
-                if (input)
-                    input.value = "";
-                console.log(this.responseText);
+                try {
+                    let response_parse = JSON.parse(this.responseText);
+                    if (response_parse.status) {
+                        add_comment_to_dom(response_parse.comment);
+                        let input = document.getElementById('comment-input');
+                        if (input)
+                            input.value = "";
+                    }
+                } catch(e) {
+                    console.log("Error " + e);
+                }
             }
         };
         XHR.open('POST', '../Controller/add_comment.php', true);
         XHR.send(commentData);
+    }
+
+    function add_comment_to_dom(comment) {
+        let ul_elmt = document.getElementById('comment-list');
+        let new_li = document.createElement('li');
+        let new_li_content = `<a href="/View/profile.php?id=${comment.user_id}" class="comment-sender">${comment.username} </a> <p class="comment-content"> ${comment.content} </p>`;
+        new_li.innerHTML = new_li_content;
+        if (ul_elmt) {
+            ul_elmt.appendChild(new_li);
+        } else {
+            let wrapper = document.getElementById('comment-wrapper');
+            let no_comments = document.getElementById('no-comments');
+            if (no_comments)
+                no_comments.remove();
+            if (wrapper) {
+                let new_ul = document.createElement('ul');
+                new_ul.setAttribute('id', "comment-list");
+                new_ul.appendChild(new_li);
+                wrapper.appendChild(new_ul);
+            }
+        }
     }
     
     function addLike(e) {
@@ -69,16 +100,21 @@ load_page(() => {
             let XHR = new XMLHttpRequest();
             XHR.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
-                    if (this.responseText == "success") {
-                        btn_like.classList.remove("far");
-                        btn_like.classList.add("fas");
-                        btn_like.id = 'btn-unlike';
-                        if (nb_like_text) {
-                            nb_like_text.textContent = +nb_like_text.textContent + 1;
+                    try {
+						let response_parse = JSON.parse(this.responseText);
+						if (response_parse.status) {
+							btn_like.classList.remove("far");
+                            btn_like.classList.add("fas");
+                            btn_like.id = 'btn-unlike';
+                            if (nb_like_text) {
+                                nb_like_text.textContent = +nb_like_text.textContent + 1;
+                            }
+                            btn_like.removeEventListener('click', addLike);
+                            like_events();
                         }
-                        btn_like.removeEventListener('click', addLike);
-                        like_events();
-                    }
+					} catch(e) {
+						console.log("Error " + e);
+					}
                 }
             };
             XHR.open('POST', '../Controller/like.php', true);
@@ -95,14 +131,19 @@ load_page(() => {
             let XHR = new XMLHttpRequest();
             XHR.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
-                    if (this.responseText == "success") {
-                        btn_unlike.classList.remove("fas");
-                        btn_unlike.classList.add("far");
-                        btn_unlike.id = 'btn-like';
-                        nb_like_text.textContent = +nb_like_text.textContent - 1;
-                        btn_unlike.removeEventListener('click', removeLike);
-                        like_events();
-                    }
+                    try {
+						let response_parse = JSON.parse(this.responseText);
+						if (response_parse.status) {
+							btn_unlike.classList.remove("fas");
+                            btn_unlike.classList.add("far");
+                            btn_unlike.id = 'btn-like';
+                            nb_like_text.textContent = +nb_like_text.textContent - 1;
+                            btn_unlike.removeEventListener('click', removeLike);
+                            like_events();
+						}
+					} catch(e) {
+						console.log("Error " + e);
+					}
                 }
             };
             XHR.open('POST', '../Controller/like.php', true);

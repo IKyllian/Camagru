@@ -48,14 +48,13 @@
                 imagedestroy($img_created);
     
                 if (create_user_img($_SESSION['id'], $img_path))
-                    echo "./public/pictures/{$img_name}";
+                    echo json_encode(array('status' => true, 'path' => "./public/pictures/{$img_name}"));
                 else
-                    echo "error";
+                    echo json_encode(array('status' => false));
             } else
-                echo "error";
+                echo json_encode(array('status' => false));
         } else
-            echo "error";
-    }  
-    else
-        echo "error";
+            echo json_encode(array('status' => false));
+    } else
+        echo json_encode(array('status' => false));
 ?>

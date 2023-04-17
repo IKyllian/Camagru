@@ -8,6 +8,7 @@
     <head>
         <title>Profile</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="#" />
         <link rel="stylesheet" href="../css/profile.css">
         <link rel="stylesheet" href="../css/gallery.css">
         <script src="https://kit.fontawesome.com/f9678243a8.js" crossorigin="anonymous"></script>
@@ -77,7 +78,7 @@
                         <?php endfor; ?>
                     </div>
                 <?php else: ?>
-                    <p> No post yet </p>
+                    <p class="no-post"> No post yet </p>
                 <?php endif; ?>
             </div>
         </div>

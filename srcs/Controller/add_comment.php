@@ -11,10 +11,12 @@
         $post_id = $_POST['post_id']; // Check if number;
 
         if (check_post_exist($post_id) && find_user(array('user_id'), 'user_id', $_SESSION['id']) != false) {
-            if (create_comment($post_id, $_SESSION['id'], $comment))
-                echo "success";
+            $new_comment = create_comment($post_id, $_SESSION['id'], $comment);
+            if ($new_comment) {
+                echo json_encode(array('status' => true, 'comment' => $new_comment));
+            }
             else
-                echo "failed";
-        }       
+                echo json_encode(array('status' => false));
+        }
     }
 ?>

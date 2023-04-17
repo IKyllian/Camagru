@@ -14,16 +14,17 @@
         if (check_post_exist($post_id) && find_user(array('user_id'), 'user_id', $_SESSION['id']) != false) {
             if ($action === "like") {
                 if (add_like($post_id, $user_id)) {
-                    echo('success');
+                    echo json_encode(array('status' => true));
                     return ;
                 }
             } else if ($action == "unlike") {
                 if (remove_like($post_id, $user_id)) {
-                    echo('success');
+                    echo json_encode(array('status' => true));
                     return ;
                 }  
             }
         } else
-            echo('error');
-    }
+            echo json_encode(array('status' => false));
+    } else
+        echo json_encode(array('status' => false));
 ?>

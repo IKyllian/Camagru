@@ -12,7 +12,7 @@
     }
 
     if (!isset($_GET['id']) || empty($_GET['id'])) {
-        redirect_to("/index.php");
+        redirect_to("/View/home.php");
     }
 
     $user_id = $_GET['id'];
@@ -21,7 +21,7 @@
         $is_user_connected = 1;
     $user = find_user(array("email, username, active_notif, created_at"), "user_id", $user_id);
     if (!$user) {
-        redirect_to("/index.php");
+        redirect_to("/View/home.php");
     }
 
     $page = 1;

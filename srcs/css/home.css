@@ -172,6 +172,7 @@
     border: 1px solid #112D4E;
     border-radius: 7px;
     gap: 5px;
+    overflow: scroll;
 }
 
 .filters-canvas {

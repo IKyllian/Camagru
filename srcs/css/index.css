@@ -19,6 +19,7 @@ body {
 }
 
 .page-container {
+    height: calc(100vh - 70px);
     flex-grow: 1;
     background-color: #e3e0f2;
 }
@@ -28,6 +29,9 @@ a {
     color: #FFFBF5;
 }
 
+h2 {
+    color: #3C486B;
+}
 p, span, a {
     margin: 0;
 }

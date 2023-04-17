@@ -248,12 +248,16 @@ load_page(() => {
 			let XHR = new XMLHttpRequest();
 			XHR.onreadystatechange = function () {
 				if (this.readyState === 4 && this.status === 200) {
-					console.log(this.responseText);
-					if (this.responseText !== 'error') {
-						add_pict_to_container(this.responseText);					
+					try {
+						let response_parse = JSON.parse(this.responseText);
+						if (response_parse.status) {
+							add_pict_to_container(response_parse.path);
+						}
+					} catch(e) {
+						console.log("Error " + e);
 					}
 				}
-				};
+			};
 			XHR.open('POST', '../Controller/upload.php', true);
 			XHR.send(imgData);
 		}

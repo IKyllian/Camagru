@@ -7,6 +7,7 @@
     <head>
         <title>Gallery</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="#" />
         <link rel="stylesheet" href="../css/gallery.css">
         <script src="https://kit.fontawesome.com/f9678243a8.js" crossorigin="anonymous"></script>
         <script type="module" src="../js/gallery.js"> </script>
@@ -51,7 +52,7 @@
                         <?php endfor; ?>
                     </div>
                 <?php else: ?>
-                    <p> No post yet </p>
+                    <h2> No post yet </h2>
                 <?php endif; ?>
             </div>
         </div>

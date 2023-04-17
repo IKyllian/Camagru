@@ -2,12 +2,13 @@
 
 .header {
     background-color: #7286D3;
-    padding: 20px 5px;
+    padding: 0 5px;
     margin: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin: 0;
+    height: 70px;
 }
 
 .header-logo {

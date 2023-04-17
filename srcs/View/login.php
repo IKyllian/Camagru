@@ -6,7 +6,7 @@
     }
 
     if (isset($_SESSION['logged'])) {
-        redirect_to("/index.php");
+        redirect_to("/View/home.php");
     }
     
     $form_error = !empty($_SESSION['error_msg']) ? $_SESSION['error_msg'] : NULL;
@@ -19,6 +19,7 @@
     <head>
         <title>Login</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="#" />
         <link rel="stylesheet" href="../css/form.css">
     </head>
     <body>

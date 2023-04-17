@@ -1,12 +1,5 @@
 @import "./index.css";
 
-.preview-wrapper {
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 i {
     cursor: pointer;
 }
@@ -14,11 +7,11 @@ i {
 .preview-container {
     margin: auto;
     display: flex;
+    padding: 10px 0;
     justify-content: center;
     flex-direction: row;
-    height: 90%;
+    height: 100%;
     width: 70vw;
-    border-radius: 5px;
 }
 
 .img-wrapper {
@@ -28,6 +21,8 @@ i {
 .img-wrapper > img {
     height: 100%;
     width: 100%;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
 .right-preview {
@@ -39,6 +34,8 @@ i {
     width: 100%;
     background-color: #8EA7E9;
     color: white;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .header-infos {
@@ -60,15 +57,17 @@ i {
 }
 
 .comment-section {
+    list-style: none;
+    margin: 0;
+    padding: 10px;
+    flex-grow: 1;
+    overflow-y: scroll;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 10px;
-    height: 100%;
-    gap: 5px;
+    gap: 10px;
 }
 
-.no-comments {
+#no-comments {
     flex-grow: 1;
     display: flex;
     justify-content: center;
@@ -90,7 +89,6 @@ i {
     display: flex;
     flex-direction: column;
     word-break: break-all;
-    /* padding-bottom: 10px; */
 }
 
 .comment-sender {
@@ -102,33 +100,47 @@ i {
     font-size: 14px;
 }
 
-.likes-container {
+.infos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 5px 10px;
+}
+
+.infos-container > span {
+    text-transform: uppercase;
+    font-size: 10px;
+}
+
+.likes-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 3px;
+    gap: 5px;
 }
 
 #btn-unlike {
     color: red;
 }
 
-.comment-section > form {
+.bottom-preview {
+    border-top: 1px solid #7286D3;
+}
+.bottom-preview > form {
     border-top: 1px solid #7286D3;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    /* padding-bottom: 5px; */
+    padding-right: 10px;
 }
 
-.comment-section > form > .comment-input {
+.bottom-preview > form > .comment-input {
     all: unset;
-    /* padding: 7px 7px 0 7px; */
     padding: 10px 12px;
     font-size: 18px;
 }
 
-.comment-section > form > button {
+.bottom-preview > form > button {
     all: unset;
 }

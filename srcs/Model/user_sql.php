@@ -63,7 +63,7 @@ function user_signin(string $username, string $password) {
                 $_SESSION['name'] = $username;
                 $_SESSION['token'] = $new_token;
                 $_SESSION['id'] = $result['user_id'];
-                redirect_to("/index.php");
+                redirect_to("/View/home.php");
             } else {
                 redirect_to("/View/login.php", "error_msg", "Account not activated");
             }
