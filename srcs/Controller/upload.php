@@ -34,11 +34,10 @@
             if ($img_created) {
                 if ($filters_path) {
                     foreach ($filters_path as $item) {
-                        $filter_path = __DIR__."/.".$item;
-                        if (file_exists($filter_path)) {
-                            $filter_mime_type = mime_content_type($filter_path);
+                        if (file_exists($item)) {
+                            $filter_mime_type = mime_content_type($item);
                             if ($filter_mime_type === 'image/png') {
-                                $filter_img = resize_filter($filter_path);
+                                $filter_img = resize_filter($item);
                                 imagecopy($img_created, $filter_img, 0, 0, 0, 0, 640, 480);
                             }
                         }
@@ -48,7 +47,7 @@
                 imagedestroy($img_created);
     
                 if (create_user_img($_SESSION['id'], $img_path))
-                    echo json_encode(array('status' => true, 'path' => "./public/pictures/{$img_name}"));
+                    echo json_encode(array('status' => true, 'path' => "../public/pictures/{$img_name}"));
                 else
                     echo json_encode(array('status' => false));
             } else

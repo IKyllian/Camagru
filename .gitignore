@@ -3,3 +3,4 @@ mysql
 *.env
 .vscode
 */public/pictures
+*mailconfig.ini

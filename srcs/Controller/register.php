@@ -20,22 +20,32 @@
 
         // set email subject & body
         $subject = 'Please activate your account';
-        $message = <<<MESSAGE
-                Hi,
-                Please click the following link to activate your account:
-                $activation_link
-                MESSAGE;
+        $message = "
+        <html>
+            <head>
+                <title>HTML email</title>
+            </head>
+            <body>
+                <p> Hi, </p>
+                <p> Please click the following link to activate your account: </p>
+                <a href='{$activation_link}'> </a>
+            </body>
+        </html>";
+        // $message = <<<MESSAGE
+        //         Hi,
+        //         Please click the following link to activate your account:
+        //         $activation_link
+        //         MESSAGE;
         // email header
-        $headers =  "From: {$email_address}" . "\r\n" .
-                    "Reply-To: {$email_address}" . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
-        // $header = "From: " . SENDER_EMAIL_ADDRESS;
-        echo("header = {$headers}");
 
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+        // $headers =  "From: <{$email_address}>" . "\r\n" .
+        //             "Content-type:text/html;charset=iso-8859-1" . "\r\n";
+        // $header = "From: " . SENDER_EMAIL_ADDRESS;
 
         // send the email
-        $ret = mail($email, $subject, nl2br($message));
-        echo("ret = {$ret}");
+        mail($email, $subject, $message, $headers);
 
     }
 
@@ -57,9 +67,9 @@
 
     $activation_code = generate_activation_code();
     if (user_register($username, $email, $password, $activation_code)) {
-        // send_activation_email($email, $activation_code);
-        header("Location: /Controller/activate.php?email={$email}&activation_code={$activation_code}");
-        // header("Location: /View/signin.php");
+        send_activation_email($email, $activation_code);
+        // header("Location: /Controller/activate.php?email={$email}&activation_code={$activation_code}");
+        header("Location: /View/login.php");
         exit;
     }
 

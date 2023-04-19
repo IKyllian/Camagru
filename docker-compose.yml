@@ -9,15 +9,17 @@ services:
       context: .
       dockerfile: nginx/Dockerfile
     ports: 
-      - "8080:80"
+      - "443:443"
     networks:
       - internal
     volumes:
       - ./srcs/:/var/www/html/
+    links:
+      - php
 
   # PHP + Packages
   php:
-    image: php:8.2-fpm-alpine
+    image: php:8.2-fpm
     build:
       context: .
       dockerfile: php/Dockerfile
@@ -27,6 +29,8 @@ services:
       - ./srcs/:/var/www/html/
     depends_on:
       - phpmyadmin
+    links:
+      - db
 
   # MySQL database
   db:

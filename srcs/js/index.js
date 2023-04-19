@@ -249,6 +249,7 @@ load_page(() => {
 			XHR.onreadystatechange = function () {
 				if (this.readyState === 4 && this.status === 200) {
 					try {
+						console.log(this.responseText);
 						let response_parse = JSON.parse(this.responseText);
 						if (response_parse.status) {
 							add_pict_to_container(response_parse.path);
