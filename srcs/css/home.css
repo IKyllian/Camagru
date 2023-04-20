@@ -28,6 +28,14 @@
     border-radius: 5px;
 }
 
+.move-filter-container {
+    height: 90%;
+    width: 90%;
+    margin: 10px;
+    cursor: move;
+    position: absolute;
+}
+
 .camera-buttons {
     display: flex;
     flex-direction: row;
@@ -67,6 +75,7 @@
     position: relative;
     width: 640px;
     height: 480px;
+    overflow: hidden;
 }
 .display-container > video {
     position: absolute;
@@ -177,4 +186,51 @@
 
 .filters-canvas {
     position: absolute;
+}
+
+#right-resize {
+    position: absolute;
+    right: 0;
+    height: 100%;
+    width: 5%;
+    cursor: ew-resize;
+}
+
+.filter-wrapper {
+    position: relative;
+    width: 640px;
+    height: 480px;
+}
+
+.square-resize {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid blue;
+    background-color: white;
+   
+}
+
+#square-top-left {
+    top: -5px;
+    left: -5px;
+    cursor: nwse-resize;
+}
+
+#square-top-right {
+    top: -5px;
+    right: -5px;
+    cursor: nesw-resize;
+}
+
+#square-bottom-left {
+    bottom: -5px;
+    left: -5px;
+    cursor: nesw-resize;
+}
+
+#square-bottom-right {
+    bottom: -5px;
+    right: -5px;
+    cursor: nwse-resize;
 }

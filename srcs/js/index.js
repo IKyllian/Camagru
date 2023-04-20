@@ -1,4 +1,5 @@
 import {create_event_listener, load_page} from "./event.js";
+import {addListeners} from "./filters_actions.js";
 
 load_page(() => {
 	let streaming = false;
@@ -117,16 +118,28 @@ load_page(() => {
 	function on_filter_click(e) {
 		const target_element = e.target;
 		const elem_path = target_element.attributes['src'].value;
-		if (!filters.find(e => e === elem_path)) {
-			filters.push(elem_path);
+		const filter_id = target_element.attributes['id'].value;
+		// Check if file exists
+		if (!filters.find(e => e.path === elem_path)) {
 			add_canvas_filter(target_element);
+			let new_obj = {
+				path: elem_path,
+				offsetTop: 0,
+				offsetLeft: 0,
+				width: width,
+				height: height,
+				imgId: filter_id,
+				id: `canvas-${filter_id}`,
+			}
+			filters.push(new_obj);
+			addListeners(new_obj);
 			e.target.style.border = "1px solid red";
 			if (localstream)
 				active_shoot_btn(true);
 			if (file_uploaded)
 				change_display_save_container('flex');
 		} else {
-			filters = filters.filter(e => e !== elem_path);
+			filters = filters.filter(e => e.path !== elem_path);
 			e.target.style.border = null; 
 			if (filters.length < 1) {
 				active_shoot_btn(false);
@@ -242,6 +255,7 @@ load_page(() => {
 		if (img_src) {
 			let imgData = new FormData();
 			imgData.append('img_data', img_src);
+			console.log(filters);
 			if (filters.length > 0) {
 				imgData.append('filters', JSON.stringify(filters));
 			}
@@ -290,30 +304,57 @@ load_page(() => {
 			elmt.style.display = value;
 	}
 
+	function create_square_span(id) {
+		let new_square = document.createElement('span');
+
+		new_square.setAttribute('id', id);
+		new_square.setAttribute('class', "square-resize");
+		return (new_square);
+	}
+
 	function add_canvas_filter(filter_target) {
 		let div_container = document.getElementById('cam-container');
 		let filterId = filter_target.attributes['id'].value;
 
 		if (div_container) {
+			let div_canvas = document.createElement('div');
 			let new_canvas = document.createElement('canvas');
+			let div_move = document.createElement('div');
+			// let right_resize = document.createElement('div');
+
+			let square1 = create_square_span('square-top-left');
+			let square2 = create_square_span('square-top-right');
+			let square3 = create_square_span('square-bottom-left');
+			let square4 = create_square_span('square-bottom-right');
+
 			new_canvas.width = width;
 			new_canvas.height = height;
-			new_canvas.setAttribute('id', `canvas-${filterId}`);
+
+			div_canvas.setAttribute('id', `canvas-${filterId}`);
+			div_canvas.setAttribute('class', `filter-wrapper`);
+			// right_resize.setAttribute('id', 'right-resize');
 			new_canvas.setAttribute('class', 'filters-canvas');
+			div_move.setAttribute('class', 'move-filter-container');
+			div_canvas.appendChild(new_canvas);
+			div_canvas.appendChild(div_move);
+			// div_canvas.appendChild(right_resize);
+			div_canvas.appendChild(square1);
+			div_canvas.appendChild(square2);
+			div_canvas.appendChild(square3);
+			div_canvas.appendChild(square4);
 
 			const ctx = new_canvas.getContext("2d");
 			ctx.drawImage(filter_target, 0, 0, width, height);
 
 			let canvas_wrapper = document.getElementById('canvas-wrapper');
 			if (canvas_wrapper) {
-				canvas_wrapper.appendChild(new_canvas);
+				canvas_wrapper.appendChild(div_canvas);
 			} else {
 				let new_wrapper = document.createElement('div');
 				new_wrapper.setAttribute('id', `canvas-wrapper`);
-				new_wrapper.appendChild(new_canvas);
+				new_wrapper.appendChild(div_canvas);
 				div_container.appendChild(new_wrapper);
 			}
-			
 		}
 	}
 

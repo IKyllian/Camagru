@@ -67,9 +67,9 @@
 
     $activation_code = generate_activation_code();
     if (user_register($username, $email, $password, $activation_code)) {
-        send_activation_email($email, $activation_code);
-        // header("Location: /Controller/activate.php?email={$email}&activation_code={$activation_code}");
-        header("Location: /View/login.php");
+        // send_activation_email($email, $activation_code);
+        header("Location: /Controller/activate.php?email={$email}&activation_code={$activation_code}");
+        // header("Location: /View/login.php");
         exit;
     }
 

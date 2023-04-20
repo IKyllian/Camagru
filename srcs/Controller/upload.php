@@ -4,19 +4,19 @@
     require_once(__DIR__.'/../Model/user_sql.php');
     require_once(__DIR__.'/parse.php');
 
-    function resize_filter(string $filter_path) {
-        $img_filter = imagecreatefrompng($filter_path);
-        list($width, $height) = getimagesize($filter_path);
-        $imageLayer = imagecreatetruecolor(640, 480);
+    function resize_filter($filter) {
+        $img_filter = imagecreatefrompng($filter['path']);
+        list($width, $height) = getimagesize($filter['path']);
+        $imageLayer = imagecreatetruecolor($filter['width'], $filter['height']);
         imagesavealpha($imageLayer, true);
         $color = imagecolorallocatealpha($imageLayer, 0, 0, 0, 127);
         imagefill($imageLayer, 0, 0, $color);
-        imagecopyresampled($imageLayer, $img_filter, 0, 0, 0, 0, 640, 480, $width, $height);
+        imagecopyresampled($imageLayer, $img_filter, 0, 0, 0, 0, $filter['width'], $filter['height'], $width, $height);
         return $imageLayer;
     }
 
     if (is_datas_set($_POST, array('img_data', 'filters'))) { 
-        $filters_path = json_decode($_POST['filters']);
+        $filters_path = json_decode($_POST['filters'], true);
         $img_datas = $_POST['img_data'];
 
         $img_datas= str_replace("data:image/jpeg;base64,","",$img_datas);
@@ -34,11 +34,11 @@
             if ($img_created) {
                 if ($filters_path) {
                     foreach ($filters_path as $item) {
-                        if (file_exists($item)) {
-                            $filter_mime_type = mime_content_type($item);
+                        if (file_exists($item['path'])) {
+                            $filter_mime_type = mime_content_type($item['path']);
                             if ($filter_mime_type === 'image/png') {
                                 $filter_img = resize_filter($item);
-                                imagecopy($img_created, $filter_img, 0, 0, 0, 0, 640, 480);
+                                imagecopy($img_created, $filter_img, $item['offsetLeft'], $item['offsetTop'], 0, 0, $item['width'], $item['height']);
                             }
                         }
                     }

@@ -13,6 +13,7 @@
     <head>
         <title>Home</title>
         <script type="module" src="../js/index.js"> </script>
+        <script type="module" src="../js/filters_actions.js"> </script>
         <link rel="shortcut icon" href="#" />
         <script src="https://kit.fontawesome.com/f9678243a8.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/home.css" />
