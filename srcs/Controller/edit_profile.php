@@ -9,8 +9,7 @@
     
     $username =  string_parse($_POST['username']);
     $email =  strtolower(string_parse($_POST['email']));
-    $user_id = $_SESSION['id'];
-    $current_user = find_user(array("user_id, username, email"), "user_id", $user_id);
+    $current_user = find_user(array("user_id, username, email"), "user_id", $logged_user_id);
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         redirect_to("/View/edit_profile.php", "error_msg", "Email is not valid");
@@ -30,16 +29,18 @@
     if (strtolower($username) !== strtolower($current_user['username'])) {
         if (find_user(array("user_id"), "username", $username))
             redirect_to("/View/edit_profile.php", "error_msg", "Username already exist");
-        change_user_field($user_id, "username", $username);
+        change_user_field($logged_user_id, "username", $username);
     }
 
     if ($email !== $current_user['email']) {
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL))
+            redirect_to("/View/edit_profile.php", "error_msg", "Invalid email");
         if (find_user(array("user_id"), "email", $email))
             redirect_to("/View/edit_profile.php", "error_msg", "Email already exist");
-        change_user_field($user_id, "email", $email);
+        change_user_field($logged_user_id, "email", $email);
     }
 
-    change_user_field($user_id, "active_notif", $notif);
-    redirect_to("/View/profile.php?id={$user_id}");
+    change_user_field($logged_user_id, "active_notif", $notif);
+    redirect_to("/View/profile.php?id={$logged_user_id}");
     
 ?>

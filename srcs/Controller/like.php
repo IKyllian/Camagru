@@ -8,22 +8,23 @@
 
     if (is_datas_set($_POST, array('action', 'post_id'))) {
         $action = $_POST['action'];
-        $post_id = $_POST['post_id'];
-        $user_id = $_SESSION['id'];
-        
-        if (check_post_exist($post_id) && find_user(array('user_id'), 'user_id', $_SESSION['id']) != false) {
-            if ($action === "like") {
-                if (add_like($post_id, $user_id)) {
-                    echo json_encode(array('status' => true));
-                    return ;
+        if (is_numeric($_POST['post_id'])) {
+            $post_id = $_POST['post_id'];
+            if (check_post_exist($post_id) && find_user(array('user_id'), 'user_id', $_SESSION['id']) != false) {
+                if ($action === "like") {
+                    if (add_like($post_id, $logged_user_id)) {
+                        echo json_encode(array('status' => true));
+                        return ;
+                    }
+                } else if ($action == "unlike") {
+                    if (remove_like($post_id, $logged_user_id)) {
+                        echo json_encode(array('status' => true));
+                        return ;
+                    }  
                 }
-            } else if ($action == "unlike") {
-                if (remove_like($post_id, $user_id)) {
-                    echo json_encode(array('status' => true));
-                    return ;
-                }  
-            }
-        } else
+            } else
+                echo json_encode(array('status' => false));
+        } else 
             echo json_encode(array('status' => false));
     } else
         echo json_encode(array('status' => false));

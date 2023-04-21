@@ -16,7 +16,7 @@
     $post_nbr = get_posts_nbr();
     $page_nbr = ceil($post_nbr/$post_per_page);
 
-    if (isset($_GET['page']) && !empty($_GET['page'])) {
+    if (isset($_GET['page']) && !empty($_GET['page']) && is_numeric($_GET['page'])) {
         $get_value = intval($_GET['page']);
         if ($get_value > 0 && $get_value <= $page_nbr) {
             $page = $get_value;

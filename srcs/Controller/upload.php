@@ -15,9 +15,23 @@
         return $imageLayer;
     }
 
+    function parse_json_filters($filters) {
+        foreach ($filters as $item) {
+            $item['path'] = string_parse($item['path']);
+            if (!is_numeric($item['offsetTop']) || !is_numeric($item['offsetLeft'])
+                || !is_numeric($item['width']) || !is_numeric($item['height']))
+                return false;
+            if ($item['width'] < 20 || $item['height'] < 20)
+                return false;
+        }
+        return (true);
+    }
+
     if (is_datas_set($_POST, array('img_data', 'filters'))) { 
-        $filters_path = json_decode($_POST['filters'], true);
-        $img_datas = $_POST['img_data'];
+        $filters = json_decode($_POST['filters'], true);
+        if (!parse_json_filters($filters))
+            echo json_encode(array('status' => false));
+        $img_datas = string_parse($_POST['img_data']);
 
         $img_datas= str_replace("data:image/jpeg;base64,","",$img_datas);
         $img_datas = base64_decode($img_datas);
@@ -32,8 +46,8 @@
             $img_created = imagecreatefromstring($img_datas);
 
             if ($img_created) {
-                if ($filters_path) {
-                    foreach ($filters_path as $item) {
+                if ($filters) {
+                    foreach ($filters as $item) {
                         if (file_exists($item['path'])) {
                             $filter_mime_type = mime_content_type($item['path']);
                             if ($filter_mime_type === 'image/png') {
@@ -46,7 +60,7 @@
                 imagejpeg($img_created, $img_path);
                 imagedestroy($img_created);
     
-                if (create_user_img($_SESSION['id'], $img_path))
+                if (create_user_img($logged_user_id, $img_path))
                     echo json_encode(array('status' => true, 'path' => "../public/pictures/{$img_name}"));
                 else
                     echo json_encode(array('status' => false));

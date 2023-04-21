@@ -7,23 +7,24 @@
     if (!is_datas_set($_POST, array('post_id'))) {
         echo json_encode(array('status' => false));
     } else {
-        $post_id = $_POST['post_id'];
-        $user_id = $_SESSION['id'];
-
-        $post = get_post_by_id($post_id);
-        if ($post) {
-            $pict_path = $post['picture_path'];
-            if ($post && $user_id === $post['user_id']) {
-                if (delete_post($post_id, $user_id)) {
-                    $env = parse_ini_file('../.env');
-                    unlink($pict_path);
-                    echo json_encode(array('status' => true, 'location' => "{$env["PATH"]}/View/gallery.php"));
-                }
-                else
+        if (is_numeric($_POST['post_id'])) {
+            $post_id = $_POST['post_id'];    
+            $post = get_post_by_id($post_id);
+            if ($post) {
+                $pict_path = $post['picture_path'];
+                if ($post && $logged_user_id === $post['user_id']) {
+                    if (delete_post($post_id, $logged_user_id)) {
+                        $env = parse_ini_file('../.env');
+                        unlink($pict_path);
+                        echo json_encode(array('status' => true, 'location' => "{$env["PATH"]}/View/gallery.php"));
+                    }
+                    else
+                        echo json_encode(array('status' => false));
+                } else {
                     echo json_encode(array('status' => false));
-            } else {
+                }
+            } else
                 echo json_encode(array('status' => false));
-            }
         } else
             echo json_encode(array('status' => false));
     }

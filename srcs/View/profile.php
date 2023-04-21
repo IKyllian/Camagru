@@ -12,7 +12,6 @@
         <link rel="stylesheet" href="../css/profile.css">
         <link rel="stylesheet" href="../css/gallery.css">
         <script src="https://kit.fontawesome.com/f9678243a8.js" crossorigin="anonymous"></script>
-        <script type="module" src="../js/profile.js"> </script>
     </head>
 
     <body>

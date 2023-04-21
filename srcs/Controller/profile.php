@@ -11,13 +11,13 @@
         public $nb_likes;
     }
 
-    if (!isset($_GET['id']) || empty($_GET['id'])) {
+    if (!isset($_GET['id']) || empty($_GET['id']) || !is_numeric($_GET['id'])) {
         redirect_to("/View/home.php");
     }
 
     $user_id = $_GET['id'];
     $is_user_connected = 0;
-    if ($_SESSION['id'] == $user_id)
+    if ($logged_user_id == $user_id)
         $is_user_connected = 1;
     $user = find_user(array("email, username, active_notif, created_at"), "user_id", $user_id);
     if (!$user) {
@@ -29,7 +29,7 @@
     $post_nbr = get_user_post_nbr($user_id);
     $page_nbr = ceil($post_nbr/$post_per_page);
 
-    if (isset($_GET['page']) && !empty($_GET['page'])) {
+    if (isset($_GET['page']) && !empty($_GET['page']) && is_numeric($_GET['page'])) {
         $get_value = intval($_GET['page']);
         if ($get_value > 0 && $get_value <= $page_nbr) {
             $page = $get_value;
