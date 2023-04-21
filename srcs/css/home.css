@@ -29,9 +29,8 @@
 }
 
 .move-filter-container {
-    height: 90%;
-    width: 90%;
-    margin: 10px;
+    height: 100%;
+    width: 100%;
     cursor: move;
     position: absolute;
 }
@@ -197,40 +196,43 @@
 }
 
 .filter-wrapper {
-    position: relative;
-    width: 640px;
-    height: 480px;
+    position: absolute;
+    width: calc(640px - 20px);
+    height: calc(480px - 20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .square-resize {
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 9px;
+    height: 9px;
     border: 1px solid blue;
     background-color: white;
-   
+    display: none;
 }
 
 #square-top-left {
-    top: -5px;
-    left: -5px;
+    top: -3px;
+    left: -3px;
     cursor: nwse-resize;
 }
 
 #square-top-right {
-    top: -5px;
-    right: -5px;
+    top: -3px;
+    right: -3px;
     cursor: nesw-resize;
 }
 
 #square-bottom-left {
-    bottom: -5px;
-    left: -5px;
+    bottom: -3px;
+    left: -3px;
     cursor: nesw-resize;
 }
 
 #square-bottom-right {
-    bottom: -5px;
-    right: -5px;
+    bottom: -3px;
+    right: -3px;
     cursor: nwse-resize;
 }

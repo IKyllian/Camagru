@@ -2,52 +2,65 @@ export function addListeners(filterObj) {
     let gMouseDownOffsetX = 0;
     let gMouseDownOffsetY = 0;
 
-    let startX, startY, startWidth, startHeight;
+    const minSize = 60;
+
+    let mouseStartX, mouseStartY, startWidth, startHeight, originalX, originalY;
 
     let filter_parent = document.getElementById(filterObj.id);
     let move_elmt = filter_parent.querySelector('.move-filter-container');
-    // let right_resize = filter_parent.querySelector('#right-resize');
     let elmts_square = filter_parent.querySelectorAll('.square-resize');
+
+    let square_selected;
 
     for (const square of elmts_square) {
         square.addEventListener('mousedown', mouseDownResize, false);
         window.addEventListener('mouseup', mouseUpResize, false);
     }
 
-    
     filter_parent.addEventListener('mouseover', move_elmt_hover, false);
     filter_parent.addEventListener('mouseout', move_elmt_out, false);
 
     if (move_elmt) {
         move_elmt.addEventListener('mousedown', mouseDownMove, false);
-        move_elmt.addEventListener('mouseup', mouseUpMove, false);
+        window.addEventListener('mouseup', mouseUpMove, false);
     }
 
     function move_elmt_hover() {
         let div = document.getElementById(filterObj.id);
-       div.style.border = "1px solid blue";
+        let squares = filter_parent.querySelectorAll('.square-resize');
+        for (const square of squares) {
+            square.style.display = "block";
+        }
+        div.style.border = "1px solid blue";
     }
 
     function move_elmt_out() {
         let div = document.getElementById(filterObj.id);
+        let squares = filter_parent.querySelectorAll('.square-resize');
+        for (const square of squares) {
+            square.style.display = "none";
+        }
        div.style.border = "none";
     }
 
-    function mouseUpResize(e) {
-        e.target.removeEventListener('mousemove', divResize, true);
+    function mouseUpResize() {
+        window.removeEventListener('mousemove', divResize, true);
     }
 
     function mouseUpMove() {
-        move_elmt.removeEventListener('mousemove', divMove, true);
+        window.removeEventListener('mousemove', divMove, true);
     }
 
     function mouseDownResize(e) {
         let div = document.getElementById(filterObj.id);
-        startX = e.clientX;
-        startY = e.clientY;
+        square_selected = e.target;
+        mouseStartX = e.clientX;
+        mouseStartY = e.clientY;
         startWidth = div.offsetWidth;
         startHeight = div.offsetHeight;
-        e.target.addEventListener('mousemove', divResize, true);
+        originalX = div.offsetLeft;
+        originalY = div.offsetTop;
+        window.addEventListener('mousemove', divResize, true);
     }
     
     function mouseDownMove(e) {
@@ -76,29 +89,69 @@ export function addListeners(filterObj) {
         let topNumString = topPart.slice(0, topPos);
         gMouseDownOffsetY = gMouseDownY - parseInt(topNumString,10);
     
-        move_elmt.addEventListener('mousemove', divMove, true);
+        window.addEventListener('mousemove', divMove, true);
     }
 
     function divResize(e) {
         let div = document.getElementById(filterObj.id);
         let canvas = filter_parent.querySelector('.filters-canvas');
+        let newWidth, newHeight;
 
-        let newX = (startWidth + e.clientX - startX);
-        let newY = (startHeight + e.clientY - startY);
+        if (square_selected) {
+            if (square_selected.id === "square-bottom-right") {
+                newWidth = startWidth + (e.clientX - mouseStartX);
+                newHeight = startHeight + (e.clientY - mouseStartY);
+            } else if (square_selected.id === "square-bottom-left") {
+                newWidth = startWidth - (e.clientX - mouseStartX);
+                newHeight = startHeight + (e.clientY - mouseStartY);
+                if (newWidth > minSize) {
+                    let newX = originalX + (e.clientX - mouseStartX);
+                    div.style.left = newX + 'px';
+                }
+            } else if (square_selected.id === "square-top-right") {
+                newWidth = startWidth + (e.clientX - mouseStartX);
+                newHeight = startHeight - (e.clientY - mouseStartY);
+                if (newHeight > minSize) {
+                    let newY = originalY + (e.clientY - mouseStartY);
+                    div.style.top = newY + 'px';
+                }
+            } else if (square_selected.id === "square-top-left") {
+                newWidth = startWidth - (e.clientX - mouseStartX);
+                newHeight = startHeight - (e.clientY - mouseStartY);
+                if (newWidth > minSize) {
+                    let newX = originalX + (e.clientX - mouseStartX);
+                    div.style.left = newX + 'px';
+                }
+                if (newHeight > minSize) {
+                    let newY = originalY + (e.clientY - mouseStartY);
+                    div.style.top = newY + 'px';
+                }
+            }
+        }        
 
-        div.style.width = newX + 'px';
-        div.style.height = newY + 'px';
-        canvas.width = newX;
-        canvas.height = newY;
-
-        let img_filter = document.getElementById(filterObj.imgId);
-        if (img_filter) {
-            const ctx = canvas.getContext("2d");
-            ctx.drawImage(img_filter, 0, 0, newX, newY);
+        if (newWidth > minSize) {
+            div.style.width = newWidth + 'px';
+            canvas.width = newWidth;
+            filterObj.width = newWidth;
         }
-
-        filterObj.width = newX;
-        filterObj.height = newY;
+            
+        if (newHeight > minSize) {
+            div.style.height = newHeight + 'px';
+            canvas.height = newHeight;
+            filterObj.height = newHeight;
+        }
+        
+        if (newWidth > minSize || newHeight > minSize) {
+            if (!(newWidth > minSize))
+                newWidth = minSize;
+            if (!(newHeight > minSize))
+                newHeight = minSize;
+            let img_filter = document.getElementById(filterObj.imgId);
+            if (img_filter) {
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img_filter, 0, 0, newWidth, newHeight);
+            }
+        }   
     }
 
     function divMove(e){

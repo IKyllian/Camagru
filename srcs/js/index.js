@@ -15,6 +15,9 @@ load_page(() => {
 	let filter_dom_array = document.getElementsByClassName('filter-btn');
 	let width = canvas.width;
 	let height = canvas.height;
+
+	let filter_width = canvas.width - 20;
+	let filter_height = canvas.height - 20;
 	let filters = [];
 	let img_src = null;
 	let localstream = null;
@@ -119,7 +122,6 @@ load_page(() => {
 		const target_element = e.target;
 		const elem_path = target_element.attributes['src'].value;
 		const filter_id = target_element.attributes['id'].value;
-		// Check if file exists
 		if (!filters.find(e => e.path === elem_path)) {
 			add_canvas_filter(target_element);
 			let new_obj = {
@@ -171,7 +173,6 @@ load_page(() => {
 				video.srcObject = stream;
 				localstream = stream;
 				video.play();
-				console.log(btn_cam);
 				if (btn_cam)
 					btn_cam.textContent = "Disable Camera";
 				cam_was_activated = true;
@@ -320,31 +321,29 @@ load_page(() => {
 			let div_canvas = document.createElement('div');
 			let new_canvas = document.createElement('canvas');
 			let div_move = document.createElement('div');
-			// let right_resize = document.createElement('div');
 
 			let square1 = create_square_span('square-top-left');
 			let square2 = create_square_span('square-top-right');
 			let square3 = create_square_span('square-bottom-left');
 			let square4 = create_square_span('square-bottom-right');
 
-			new_canvas.width = width;
-			new_canvas.height = height;
+			new_canvas.width = filter_width;
+			new_canvas.height = filter_height;
 
 			div_canvas.setAttribute('id', `canvas-${filterId}`);
 			div_canvas.setAttribute('class', `filter-wrapper`);
-			// right_resize.setAttribute('id', 'right-resize');
 			new_canvas.setAttribute('class', 'filters-canvas');
 			div_move.setAttribute('class', 'move-filter-container');
+
 			div_canvas.appendChild(new_canvas);
 			div_canvas.appendChild(div_move);
-			// div_canvas.appendChild(right_resize);
 			div_canvas.appendChild(square1);
 			div_canvas.appendChild(square2);
 			div_canvas.appendChild(square3);
 			div_canvas.appendChild(square4);
 
 			const ctx = new_canvas.getContext("2d");
-			ctx.drawImage(filter_target, 0, 0, width, height);
+			ctx.drawImage(filter_target, 0, 0, filter_width, filter_height);
 
 			let canvas_wrapper = document.getElementById('canvas-wrapper');
 			if (canvas_wrapper) {
