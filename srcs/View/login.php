@@ -28,7 +28,7 @@
                 <div class="form-container">
                     <p class="form-title"> Login </p>
                     <?php if ($form_error != NULL): ?>
-                        <p> <?php echo $form_error ?> </p>
+                        <p class="msg-error"> <?php echo $form_error ?> </p>
                     <?php endif; ?>
                     <form id='login-form' method="post" action="../Controller/signin.php">
                         <label>
@@ -38,6 +38,7 @@
                         <label>
                             Password
                             <input type="password" name="password" />
+                            <a class="forgot-pass" href="form_send_mail_password.php"> Forgot password ?</a>
                         </label>            
                         <input type="submit" value="Signin" />
                     </form>

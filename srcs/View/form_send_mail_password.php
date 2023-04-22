@@ -15,7 +15,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Register</title>
+        <title>Send Mail</title>
         <link rel="shortcut icon" href="#" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/form.css">
@@ -25,26 +25,17 @@
         <div class="page-container">
             <div class="form-wrapper">
                 <div class="form-container">
-                    <p class="form-title"> Register </p>
+                    <p class="form-title"> Send Mail </p>
                     <?php if ($form_error): ?>
                         <p class="msg-error"> <?php echo $form_error ?> </p>
                     <?php endif; ?>
-                    <form method="post" action="../Controller/register.php">
+                    <form method="post" action="../Controller/send_mail_password.php">
                         <label>
-                            Username
-                            <input type="text" name="username" />
-                        </label>
-                        <label>
-                            Email
+                            Mail
                             <input type="text" name="email" />
-                        </label>
-                        <label>
-                            Password
-                            <input type="password" name="password" />
                         </label>
                         <input type="submit" value="Signup" />
                     </form>
-                    <a class="switch-btn" href="login.php"> Déjà un compte ? Connectez vous </a>
                 </div>
             </div>
         </div>

@@ -1,5 +1,6 @@
 <?php
     require_once(__DIR__."/../Model/user_sql.php");
+    require_once(__DIR__."/parse.php");
 
     // Need to sanitize
     if (is_datas_set($_GET, array('activation_code', 'email'))) {

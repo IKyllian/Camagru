@@ -1,12 +1,8 @@
 <?php
     require_once(__DIR__."/../Model/user_sql.php");
     require_once(__DIR__."/parse.php");
+    require_once(__DIR__."/user_utils.php");
     session_start();
-
-    function generate_activation_code(): string
-    {
-        return bin2hex(random_bytes(16));
-    }
 
     function send_activation_email(string $email, string $activation_code): void
     {

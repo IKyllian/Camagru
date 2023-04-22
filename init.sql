@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS users (
     active_notif tinyint(1) DEFAULT 1,
     active tinyint(1) DEFAULT 0,
     activation_code varchar(255) NOT NULL,
+    password_reset_code varchar(255) DEFAULT NULL,
     activation_expiry datetime NOT NULL,
     activated_at datetime DEFAULT NULL,
     created_at timestamp NOT NULL DEFAULT current_timestamp(),

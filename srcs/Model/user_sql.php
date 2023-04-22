@@ -129,6 +129,28 @@ function find_unverified_user(string $activation_code, string $email)
     return null;
 }
 
+function find_reset_code_user(string $reset_code, string $email)
+{
+    $sql = 'SELECT user_id, password_reset_code
+            FROM users
+            WHERE email=:email';
+
+    $statement = db_connection()->prepare($sql);
+
+    $statement->bindValue(':email', $email, PDO::PARAM_STR);
+    $statement->execute();
+
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
+
+    if ($user) {
+        if (password_verify($reset_code, $user['password_reset_code'])) {
+            return $user;
+        }
+    }
+
+    return null;
+}
+
 function activate_user(int $user_id): bool
 {
     $sql = 'UPDATE users
@@ -181,6 +203,17 @@ function change_user_field(int $user_id, string $field, string $field_value) {
     $statement = db_connection()->prepare($sql);
     $statement->bindValue(":{$field}", $field_value, $field_type);
     $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+    return $statement->execute();
+}
+
+function reset_password_reset_code($user_id) {
+    $sql = "UPDATE users
+            SET password_reset_code=NULL
+            WHERE user_id=:user_id";
+
+    $statement = db_connection()->prepare($sql);
+    $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+
     return $statement->execute();
 }
 

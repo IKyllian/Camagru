@@ -64,5 +64,11 @@
 
 .switch-btn {
     font-size: 14px;
-    color: #0A2647;
+    /* color: #0A2647; */
+}
+
+.forgot-pass {
+    font-size: 10px;
+    text-align: end;
+    /* color: #0A2647; */
 }
