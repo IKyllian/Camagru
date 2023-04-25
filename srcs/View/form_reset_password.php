@@ -24,7 +24,6 @@
 
     $form_error = !empty($_SESSION['error_msg']) ? $_SESSION['error_msg'] : NULL;
     unset($_SESSION['error_msg']); 
-    echo $form_error;
 ?>
 
 <!DOCTYPE html>

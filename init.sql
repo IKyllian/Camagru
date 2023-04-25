@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS posts (
     CONSTRAINT post_fk_user 
         FOREIGN KEY(user_id) 
         REFERENCES users(user_id) 
-        ON DELETE RESTRICT
+        ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS comments (
     comment_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS comments (
     CONSTRAINT comment_fk_user 
         FOREIGN KEY(user_id) 
         REFERENCES users(user_id) 
-        ON DELETE RESTRICT
+        ON DELETE CASCADE
 );
 CREATE TABLE IF NOT EXISTS likes (
     like_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
@@ -51,5 +51,5 @@ CREATE TABLE IF NOT EXISTS likes (
     CONSTRAINT like_fk_user 
         FOREIGN KEY(user_id) 
         REFERENCES users(user_id) 
-        ON DELETE RESTRICT
+        ON DELETE CASCADE
 );

@@ -20,58 +20,56 @@
     <body>
         <?php require_once(__DIR__.'/header.html') ?>
         <div class="page-container">
-            <!-- <div class="preview-wrapper"> -->
-                <div class="preview-container">
-                    <div class="img-wrapper">
-                        <img src="<?= $post['picture_path'] ?>" />
+            <div class="preview-container">
+                <div class="img-wrapper">
+                    <img src="<?= $post['picture_path'] ?>" />
+                </div>
+                <div class="right-preview">
+                    <div class="header-infos">
+                        <a class="post-owner" href="/View/profile.php?id=<?=$post['user_id']?>"> <?= $post['username'] ?>  </a>
+                        <?php if ($post['user_id'] === $_SESSION['id']): ?>
+                            <i id="delete-btn" class="fas fa-trash" post-id="<?= $post['post_id']?>"></i>
+                        <?php endif; ?>
                     </div>
-                    <div class="right-preview">
-                        <div class="header-infos">
-                            <a class="post-owner" href="/View/profile.php?id=<?=$post['user_id']?>"> <?= $post['username'] ?>  </a>
-                            <?php if ($post['user_id'] === $_SESSION['id']): ?>
-                                <i id="delete-btn" class="fas fa-trash" post-id="<?= $post['post_id']?>"></i>
-                            <?php endif; ?>
-                        </div>
-                        <div id="comment-wrapper" class="comment-section">
-                            <?php if (count($comments) > 0): ?>
-                                <ul id="comment-list">
-                                    <?php foreach($comments as $comment): ?>
-                                        <li>
-                                            <a href="/View/profile.php?id=<?=$post['user_id']?>" class="comment-sender"> <?= $comment['username'] ?> </a>
-                                            <p class="comment-content"> <?= $comment['content'] ?> </p>
-                                        </li>
-                                    <?php endforeach; ?>
-                                </ul>
-                            <?php else: ?>
-                                <div id="no-comments">
-                                    <p> No Comments yet </p>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                        <div class="bottom-preview">
-                            <div class="infos-container">
-                                <div class="likes-wrapper">
-                                    <?php if ($is_post_liked): ?>
-                                        <i id="btn-unlike" class="fas fa-heart fa-lg" post-id="<?= $post['post_id'] ?>"></i>
-                                    <?php else: ?>
-                                        <i id="btn-like" class="far fa-heart fa-lg" post-id="<?= $post['post_id'] ?>"></i>
-                                    <?php endif; ?>
-                                        <p id="nb_like"><?= $nb_like ?></p>
-                                </div>
-                                <span> 10 avril 2023 </span>
+                    <div id="comment-wrapper" class="comment-section">
+                        <?php if (count($comments) > 0): ?>
+                            <ul id="comment-list">
+                                <?php foreach($comments as $comment): ?>
+                                    <li>
+                                        <a href="/View/profile.php?id=<?=$post['user_id']?>" class="comment-sender"> <?= $comment['username'] ?> </a>
+                                        <p class="comment-content"> <?= $comment['content'] ?> </p>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php else: ?>
+                            <div id="no-comments">
+                                <p> No Comments yet </p>
                             </div>
-
-                            <form id="comment-form">
-                                <input type="hidden" name="post-id" value="<?= $post['post_id'] ?>" />
-                                <input class="comment-input" id="comment-input" placeholder="Ajouter un commentaire..." type="text" name="comment" />
-                                <button formmethod="post">
-                                    <i class="far fa-paper-plane"></i>
-                                </button>
-                            </form>
+                        <?php endif; ?>
+                    </div>
+                    <div class="bottom-preview">
+                        <div class="infos-container">
+                            <div class="likes-wrapper">
+                                <?php if ($is_post_liked): ?>
+                                    <i id="btn-unlike" class="fas fa-heart fa-lg" post-id="<?= $post['post_id'] ?>"></i>
+                                <?php else: ?>
+                                    <i id="btn-like" class="far fa-heart fa-lg" post-id="<?= $post['post_id'] ?>"></i>
+                                <?php endif; ?>
+                                    <p id="nb_like"><?= $nb_like ?></p>
+                            </div>
+                            <span> <?= $post_date->format('d-m-Y') ?> </span>
                         </div>
+
+                        <form id="comment-form">
+                            <input type="hidden" name="post-id" value="<?= $post['post_id'] ?>" />
+                            <input class="comment-input" id="comment-input" placeholder="Ajouter un commentaire..." type="text" name="comment" />
+                            <button formmethod="post" id="send-button">
+                                <i class="far fa-paper-plane"></i>
+                            </button>
+                        </form>
                     </div>
                 </div>
-            <!-- </div> -->
+            </div>
         </div>
     </body>
 </html>

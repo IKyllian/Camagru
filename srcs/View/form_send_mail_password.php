@@ -34,7 +34,7 @@
                             Mail
                             <input type="text" name="email" />
                         </label>
-                        <input type="submit" value="Signup" />
+                        <input type="submit" value="Send" />
                     </form>
                 </div>
             </div>

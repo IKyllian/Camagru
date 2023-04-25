@@ -17,5 +17,6 @@
         $comments = get_comments_from_post($post_id);
         $nb_like = get_like_number($post_id);
         $is_post_liked = user_liked_post($post_id, $logged_user_id);
+        $post_date = new DateTimeImmutable($post['created_at']);
     }
 ?>

@@ -45,29 +45,38 @@ load_page(() => {
     function submit_comment(e) {
         e.preventDefault();
         const formField = e.target.elements;
-        const comment = formField.namedItem("comment").value;
-        const post_id = formField.namedItem("post-id").value;
-        let commentData = new FormData();
-        commentData.append('comment', comment);
-        commentData.append('post_id', post_id);
-        let XHR = new XMLHttpRequest();
-        XHR.onreadystatechange = function () {
-            if (this.readyState === 4 && this.status === 200) {
-                try {
-                    let response_parse = JSON.parse(this.responseText);
-                    if (response_parse.status) {
-                        add_comment_to_dom(response_parse.comment);
-                        let input = document.getElementById('comment-input');
-                        if (input)
-                            input.value = "";
+        const comment = formField.namedItem("comment") ? formField.namedItem("comment").value : null;
+        const post_id = formField.namedItem("post-id") ? formField.namedItem("post-id").value : null;
+        let comment_input = formField.namedItem("comment");
+        let send_button = document.getElementById('send-button');
+        if (comment && post_id && comment_input && send_button) {
+            comment_input.disabled = "true";
+            send_button.disabled = "true";
+            let commentData = new FormData();
+            commentData.append('comment', comment);
+            commentData.append('post_id', post_id);
+            let XHR = new XMLHttpRequest();
+            XHR.onreadystatechange = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    console.log(this.responseText);
+                    try {
+                        let response_parse = JSON.parse(this.responseText);
+                        if (response_parse.status) {
+                            add_comment_to_dom(response_parse.comment);
+                            comment_input.value = "";
+                            comment_input.disabled = "";
+                            send_button.disabled = "";
+                        }
+                    } catch(e) {
+                        console.log("Error " + e);
+                        comment_input.disabled = "";
+                        send_button.disabled = "";
                     }
-                } catch(e) {
-                    console.log("Error " + e);
                 }
-            }
-        };
-        XHR.open('POST', '../Controller/add_comment.php', true);
-        XHR.send(commentData);
+            };
+            XHR.open('POST', '../Controller/add_comment.php', true);
+            XHR.send(commentData);
+        }
     }
 
     function add_comment_to_dom(comment) {

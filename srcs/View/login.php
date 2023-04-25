@@ -11,6 +11,9 @@
     
     $form_error = !empty($_SESSION['error_msg']) ? $_SESSION['error_msg'] : NULL;
     unset($_SESSION['error_msg']);
+
+    $notif_success = !empty($_SESSION['notif_success']) ? $_SESSION['notif_success'] : NULL;
+    unset($_SESSION['notif_success']);    
   
 ?>
 
@@ -21,11 +24,22 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="#" />
         <link rel="stylesheet" href="../css/form.css">
+        <script src="https://kit.fontawesome.com/f9678243a8.js" crossorigin="anonymous"></script>
+        <script type="module" src="../js/login.js"> </script>
     </head>
     <body>
         <div class="page-container">
             <div class="form-wrapper">
                 <div class="form-container">
+                    <?php if ($notif_success != NULL): ?>
+                        <div class="notif-activated" id="notif-wrapper">
+                            <div class="notif-check">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <p> <?= $notif_success ?> </p>
+                            <i class="fas fa-xmark" id="notif-delete"></i>
+                        </div>
+                    <?php endif; ?>
                     <p class="form-title"> Login </p>
                     <?php if ($form_error != NULL): ?>
                         <p class="msg-error"> <?php echo $form_error ?> </p>

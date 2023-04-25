@@ -72,3 +72,44 @@
     text-align: end;
     /* color: #0A2647; */
 }
+
+.notif-activated {
+    position: absolute;
+    top: 10px;
+    padding: 15px;
+    background-color: #DDF2CE;
+    border: 1px solid #93c46f;
+    color: #93c46f;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+}
+
+.notif-activated > p {
+    margin: 0;
+}
+.notif-check {
+    background-color: #93c46f;
+    text-align: center;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    padding: 1px;
+}
+
+.notif-check > i {
+    color: white;
+}
+
+#notif-delete {
+    margin-top: 2px;
+    margin-left: 5px;
+    cursor: pointer;
+}

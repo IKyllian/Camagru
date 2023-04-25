@@ -16,6 +16,8 @@ services:
       - ./srcs/:/var/www/html/
     links:
       - php
+    depends_on:
+      - php
 
   # PHP + Packages
   php:
