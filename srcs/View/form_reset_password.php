@@ -36,28 +36,26 @@
     </head>
 
     <body>
-        <div class="page-container">
-            <div class="form-wrapper">
-                <div class="form-container">
-                    <p class="form-title"> Reset Password </p>
-                    <?php if ($form_error): ?>
-                        <p class="msg-error"> <?php echo $form_error ?> </p>
-                    <?php endif; ?>
-                    <form method="post" action="../Controller/reset_password.php">
-                        <input type="hidden" name="user_id" value="<?= $user['user_id'] ?>" />
-                        <input type="hidden" name="email" value="<?= $email ?>" />
-                        <input type="hidden" name="reset_code" value="<?= $reset_code?>" />
-                        <label>
-                            New Password
-                            <input type="password" name="new_password" />
-                        </label>
-                        <label>
-                            Confirm Password
-                            <input type="password" name="confirm_password" />
-                        </label>
-                        <input type="submit" value="Reset" />
-                    </form>
-                </div>
+        <div class="form-sign-wrapper">
+            <div class="form-container">
+                <p class="form-title"> Reset Password </p>
+                <?php if ($form_error): ?>
+                    <p class="msg-error"> <?php echo $form_error ?> </p>
+                <?php endif; ?>
+                <form method="post" action="../Controller/reset_password.php">
+                    <input type="hidden" name="user_id" value="<?= $user['user_id'] ?>" />
+                    <input type="hidden" name="email" value="<?= $email ?>" />
+                    <input type="hidden" name="reset_code" value="<?= $reset_code?>" />
+                    <label>
+                        New Password
+                        <input type="password" name="new_password" />
+                    </label>
+                    <label>
+                        Confirm Password
+                        <input type="password" name="confirm_password" />
+                    </label>
+                    <input type="submit" value="Reset" />
+                </form>
             </div>
         </div>
     </body>

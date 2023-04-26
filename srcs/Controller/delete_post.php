@@ -16,7 +16,7 @@
                     if (delete_post($post_id, $logged_user_id)) {
                         $env = parse_ini_file('../.env');
                         unlink($pict_path);
-                        echo json_encode(array('status' => true, 'location' => "{$env["PATH"]}/View/gallery.php"));
+                        echo json_encode(array('status' => true, 'location' => "{$env["APP_URL"]}/View/gallery.php"));
                     }
                     else
                         echo json_encode(array('status' => false));

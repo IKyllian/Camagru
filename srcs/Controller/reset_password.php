@@ -21,6 +21,10 @@
     $new_password =  string_parse($_POST['new_password']);
     $confirm_password =  string_parse($_POST['confirm_password']);
 
+    if (!password_regex_check($new_password)) {
+        redirect_to("/View/form_reset_password.php?email=$email&reset_code=$reset_code", "error_msg", "Password must contains at least 5 characters, 1 uppercase and one digit");
+    }
+
     if ($new_password !== $confirm_password)
         redirect_to("/View/form_reset_password.php?email=$email&reset_code=$reset_code", "error_msg", "Two passwords must be same");
 

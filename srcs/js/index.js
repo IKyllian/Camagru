@@ -13,6 +13,7 @@ load_page(() => {
 	let shoot_btn = document.getElementById("btn-shoot");
 	let btn_cam = document.getElementById('btn-cam');
 	let filter_dom_array = document.getElementsByClassName('filter-btn');
+	let delete_icon = document.getElementById('notif-icon-delete');
 	let width = canvas.width;
 	let height = canvas.height;
 
@@ -47,6 +48,14 @@ load_page(() => {
 			enable_cam_display(false);
 		}
 	}
+
+	
+    
+    create_event_listener(delete_icon, 'click', () => {
+        let parent = document.getElementById('notif-wrapper');
+        if (parent)
+            parent.style.display = "none";
+    });
 
 	clearphoto();
 	create_event_listener(btn_cam, 'click', change_cam_status);
@@ -166,23 +175,30 @@ load_page(() => {
 	
 	function change_cam_status() {
 		if (video.srcObject === null) {
-			navigator.mediaDevices.getUserMedia({ video: true, audio: false })
-			.then((stream) => {
-				clearphoto();
-				change_remove_file_display('none');
-				video.srcObject = stream;
-				localstream = stream;
-				video.play();
-				if (btn_cam)
-					btn_cam.textContent = "Disable Camera";
-				cam_was_activated = true;
-				enable_cam_display(true);
-				if (filters.length > 0)
-					active_shoot_btn(true);
-			})
-			.catch((err) => {
-				console.error(`An error occurred: ${err}`);
-			});
+			if (navigator && navigator.mediaDevices) {
+				navigator.mediaDevices.getUserMedia({ video: true, audio: false })
+				.then((stream) => {
+					clearphoto();
+					change_remove_file_display('none');
+					video.srcObject = stream;
+					localstream = stream;
+					video.play();
+					if (btn_cam)
+						btn_cam.textContent = "Disable Camera";
+					cam_was_activated = true;
+					enable_cam_display(true);
+					if (filters.length > 0)
+						active_shoot_btn(true);
+				})
+				.catch((err) => {
+					console.error(`An error occurred: ${err}`);
+				});
+			} else {
+				let parent = document.getElementById('notif-wrapper');
+				if (parent)
+					parent.style.display = "flex";
+				console.log("Cam not working");
+			}
 		} else {
 			disable_cam();
 		}

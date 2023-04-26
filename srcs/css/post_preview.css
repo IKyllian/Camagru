@@ -10,12 +10,12 @@ i {
     padding: 10px 0;
     justify-content: center;
     flex-direction: row;
-    height: 100%;
+    height: calc(100vh - 70px - 50px - 40px);  /* soustraire par la height du header - footer et le gap entre les elements */
     width: 85vw;
 }
 
 .img-wrapper {
-    height: 100%;
+    width: 50%;
 }
 
 .img-wrapper > img {
@@ -31,7 +31,7 @@ i {
     flex-shrink: 2;
     align-items: stretch;
     gap: 5px;
-    width: 100%;
+    width: 50%;
     background-color: #8EA7E9;
     color: white;
     border-top-right-radius: 5px;
@@ -139,6 +139,7 @@ i {
     all: unset;
     padding: 10px 12px;
     font-size: 18px;
+    width: 100%;
 }
 
 .bottom-preview > form > button {

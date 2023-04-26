@@ -11,6 +11,10 @@
     $email =  strtolower(string_parse($_POST['email']));
     $current_user = find_user(array("user_id, username, email"), "user_id", $logged_user_id);
 
+    if (!username_check($username)) {
+        redirect_to("/View/edit_profile.php", "error_msg", "Username must contains at least 2 characters");
+    }
+
     if (!filter_var($email, FILTER_VALIDATE_EMAIL))
         redirect_to("/View/edit_profile.php", "error_msg", "Email is not valid");
 

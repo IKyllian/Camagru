@@ -71,6 +71,7 @@
                 </div>
             </div>
         </div>
+        <?php require_once(__DIR__.'/footer.html') ?>
     </body>
 </html>
 <?php endif; ?>

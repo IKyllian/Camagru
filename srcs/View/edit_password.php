@@ -29,7 +29,7 @@
                 <div class="form-container">
                     <p class="form-title"> Reset Password</p>
                     <?php if ($error): ?>
-                        <p> <?= $error ?> </p>
+                        <p class="msg-error"> <?= $error ?> </p>
                     <?php endif; ?>
                     <form method="post" action="../Controller/edit_password.php">
                         <label>
@@ -49,5 +49,6 @@
                 </div>
             </div>
         </div>
+        <?php require_once(__DIR__.'/footer.html') ?>
     </body>
 </html>

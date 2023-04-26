@@ -38,6 +38,14 @@
     $username = string_parse($_POST['username']);
     $password = string_parse($_POST['password']);
 
+    if (!username_check($username)) {
+        redirect_to("/View/register.php", "error_msg", "Username must contains at least 2 characters");
+    }
+
+    if (!password_regex_check($password)) {
+        redirect_to("/View/register.php", "error_msg", "Password must contains at least 5 characters, 1 uppercase and one digit");
+    }
+
     if (find_user(array("user_id"), "username", $username) != false)
         redirect_to("/View/register.php", "error_msg", "Username already exist");
 
@@ -47,9 +55,8 @@
     $activation_code = generate_activation_code();
     if (user_register($username, $email, $password, $activation_code)) {
         if (send_activation_email($email, $activation_code, $username))
-            redirect_to("/View/login.php");
+            redirect_to("/View/login.php", "notif_success", "A mail has been send to activate your account");
         else
             redirect_to("/View/register.php", "error_msg", "Failed to send mail");
     }
-
 ?>

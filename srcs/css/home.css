@@ -6,6 +6,10 @@
     margin: 10px 0;
 }
 
+#notif-wrapper {
+    display: none;
+}
+
 .camera-container {
     display: flex;
     flex-direction: column;

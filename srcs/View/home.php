@@ -17,6 +17,7 @@
         <link rel="shortcut icon" href="#" />
         <script src="https://kit.fontawesome.com/f9678243a8.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../css/home.css" />
+        <link rel="stylesheet" href="../css/notif.css" />
     </head>
 
     <body>
@@ -26,6 +27,13 @@
         <?php endif; ?>
         <div class="page-container">
             <div class="page-wrapper">
+                <div class="notif-container notif-error" id="notif-wrapper">
+                    <div class="notif-icon notif-icon-error">
+                        <i class="fas fa-circle-exclamation"></i>
+                    </div>
+                    <p> Camera is not available </p>
+                    <i class="fas fa-xmark" id="notif-icon-delete"></i>
+                </div>
                 <div class="camera-container">
                     <div class="filters-container">
                         <?php
@@ -74,5 +82,6 @@
                 </div>
             </div>
         </div>
+        <?php require_once(__DIR__.'/footer.html') ?>
     </body>
 </html>

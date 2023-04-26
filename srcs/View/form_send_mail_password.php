@@ -22,21 +22,19 @@
     </head>
 
     <body>
-        <div class="page-container">
-            <div class="form-wrapper">
-                <div class="form-container">
-                    <p class="form-title"> Send Mail </p>
-                    <?php if ($form_error): ?>
-                        <p class="msg-error"> <?php echo $form_error ?> </p>
-                    <?php endif; ?>
-                    <form method="post" action="../Controller/send_mail_password.php">
-                        <label>
-                            Mail
-                            <input type="text" name="email" />
-                        </label>
-                        <input type="submit" value="Send" />
-                    </form>
-                </div>
+        <div class="form-sign-wrapper">
+            <div class="form-container">
+                <p class="form-title"> Send Mail </p>
+                <?php if ($form_error): ?>
+                    <p class="msg-error"> <?php echo $form_error ?> </p>
+                <?php endif; ?>
+                <form method="post" action="../Controller/send_mail_password.php">
+                    <label>
+                        Mail
+                        <input type="text" name="email" />
+                    </label>
+                    <input type="submit" value="Send" />
+                </form>
             </div>
         </div>
     </body>

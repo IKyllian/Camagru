@@ -33,17 +33,19 @@
         if (is_numeric($_POST['post_id'])) {
             $post_id = $_POST['post_id'];
             $post = get_post_by_id($post_id);
-            $post_owner = find_user(array("active_notif, email, username"), "user_id", $post['user_id']);
-            if ($post != false && find_user(array('user_id'), 'user_id', $logged_user_id) != false) {
-                $new_comment = create_comment($post_id, $logged_user_id, $comment);
-                if ($new_comment) {
-                    echo json_encode(array('status' => true, 'comment' => $new_comment));
-                    if ($post_owner && $logged_user_username && $post_owner['active_notif']) {
-                        send_post_mail($post_owner['email'], $post_owner['username'], $logged_user_username, $comment, $post['picture_path']);
+            if ($post) {
+                $post_owner = find_user(array("active_notif, email, username"), "user_id", $post['user_id']);
+                if (find_user(array('user_id'), 'user_id', $logged_user_id) != false) {
+                    $new_comment = create_comment($post_id, $logged_user_id, $comment);
+                    if ($new_comment) {
+                        echo json_encode(array('status' => true, 'comment' => $new_comment));
+                        if ($post_owner && $logged_user_username && $post_owner['active_notif']) {
+                            send_post_mail($post_owner['email'], $post_owner['username'], $logged_user_username, $comment, $post['picture_path']);
+                        }
                     }
+                    else
+                        echo json_encode(array('status' => false));
                 }
-                else
-                    echo json_encode(array('status' => false));
             }
         } else
             echo json_encode(array('status' => false));
