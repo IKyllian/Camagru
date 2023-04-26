@@ -28,6 +28,7 @@ load_page(() => {
 	function reset_settings() {
 		filters = [];
 		clearphoto();
+		active_shoot_btn(false);
 		change_remove_file_display('none');
 		change_display_save_container('none');
 		disable_filter_border();
@@ -48,8 +49,6 @@ load_page(() => {
 			enable_cam_display(false);
 		}
 	}
-
-	
     
     create_event_listener(delete_icon, 'click', () => {
         let parent = document.getElementById('notif-wrapper');
@@ -58,6 +57,13 @@ load_page(() => {
     });
 
 	clearphoto();
+	window.addEventListener('resize', () => {
+		let canvas = document.getElementById("canvas");
+		if (canvas) {
+			width = canvas.width;
+			height = canvas.height;
+		}
+	})
 	create_event_listener(btn_cam, 'click', change_cam_status);
 	create_event_listener(form_file_upload, 'change', on_file_change);
 	create_event_listener(remove_file, 'click', (e) => {

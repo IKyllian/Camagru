@@ -58,6 +58,8 @@ function user_signin(string $username, string $password) {
             if (is_user_active($result)) {
                 $new_token = hash("sha256", bin2hex(random_bytes(16))); 
                 create_user_token($result['user_id'], $new_token);
+                if (session_status() === PHP_SESSION_NONE)
+                    session_start();
                 session_regenerate_id();
                 $_SESSION['logged'] = TRUE;
                 $_SESSION['name'] = $username;
@@ -121,9 +123,8 @@ function find_unverified_user(string $activation_code, string $email)
             return null;
         }
         
-        if (password_verify($activation_code, $user['activation_code'])) {
+        if (password_verify($activation_code, $user['activation_code']))
             return $user;
-        }
     }
 
     return null;

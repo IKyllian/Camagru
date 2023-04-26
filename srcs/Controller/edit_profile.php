@@ -34,6 +34,9 @@
         if (find_user(array("user_id"), "username", $username))
             redirect_to("/View/edit_profile.php", "error_msg", "Username already exist");
         change_user_field($logged_user_id, "username", $username);
+        if (session_status() === PHP_SESSION_NONE)
+            session_start();
+        $_SESSION['name'] = $username;
     }
 
     if ($email !== $current_user['email']) {

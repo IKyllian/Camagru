@@ -10,8 +10,9 @@
 
         // if user exists and activate the user successfully
         if ($user && activate_user($user['user_id'])) {
+            if (session_status() === PHP_SESSION_NONE)
+                session_start();
             session_regenerate_id();
-            session_start();
             $_SESSION['notif_success'] = "Account activated";
             header("Location: /View/login.php");
             exit;

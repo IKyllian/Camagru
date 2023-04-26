@@ -254,3 +254,91 @@
         height: 150px;
     }
 }
+
+@media screen and (max-width: 640px) {
+    .camera-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 420px;
+    }
+
+    #video {
+        width: 420px;
+        height: 260px;
+    }
+
+    #photo {
+        width: 420px;
+        height: 260px;
+    }
+
+    .display-container {
+        position: relative;
+        width: 420px;
+        height: 260px;
+        overflow: hidden;
+    }
+
+    #canvas {
+        width: 420px;
+        height: 260px;
+    }
+
+    .filter-wrapper {
+        position: absolute;
+        width: calc(420px - 20px);
+        height: calc(260px - 20px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .pictures-wrapper > ul {
+        flex-direction: row;
+        width: 330px;
+        height: 150px;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .camera-container {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        width: 360px;
+    }
+
+    .display-container {
+        position: relative;
+        width: 360px;
+        height: 200px;
+        overflow: hidden;
+    }
+
+    #video {
+        width: 360px;
+        height: 200px;
+    }
+
+    #photo {
+        width: 360px;
+        height: 200px;
+    }
+
+    #canvas {
+        width: 360px;
+        height: 200px;
+    }
+
+    .filter-wrapper {
+        position: absolute;
+        width: calc(360px - 20px);
+        height: calc(200px - 20px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

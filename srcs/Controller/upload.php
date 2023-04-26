@@ -5,7 +5,7 @@
     require_once(__DIR__.'/parse.php');
 
     function resize_filter($filter) {
-        $img_filter = imagecreatefrompng($filter['path']);
+        $img_filter = @imagecreatefrompng($filter['path']);
         list($width, $height) = getimagesize($filter['path']);
         $imageLayer = imagecreatetruecolor($filter['width'], $filter['height']);
         imagesavealpha($imageLayer, true);

@@ -1,6 +1,8 @@
 <?php
     require_once(__DIR__."/../Model/user_sql.php");
     require_once(__DIR__."/parse.php");
+    if (session_status() === PHP_SESSION_NONE)
+        session_start();
     session_regenerate_id();
 
     if (!is_datas_set($_POST, array('email', 'reset_code'))) {
