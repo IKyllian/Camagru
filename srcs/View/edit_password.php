@@ -23,7 +23,7 @@
     </head>
 
     <body>
-        <?php require_once(__DIR__.'/header.html') ?>
+        <?php require_once(__DIR__.'/header.php') ?>
         <div class="page-container">
             <div class="form-wrapper">
                 <div class="form-container">

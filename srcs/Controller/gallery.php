@@ -1,5 +1,5 @@
 <?php
-    require_once(__DIR__.'/log_check.php');
+    require_once(__DIR__.'/log_public_check.php');
     require_once(__DIR__."/../Controller/redirect.php");
     require_once(__DIR__.'/../Model/like_sql.php');
     require_once(__DIR__.'/../Model/comment_sql.php');

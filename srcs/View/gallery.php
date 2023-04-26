@@ -13,18 +13,14 @@
     </head>
 
     <body>
-        <?php require_once(__DIR__.'/header.html') ?>
-        <!-- <?php if ($req_error): ?>
-            <p> Error while request </p>
-        <?php endif; ?> -->
-            
+        <?php require_once(__DIR__.'/header.php') ?>
         <div class="page-container">
             <div class="gallery-wrapper">
                 <?php if (count($posts) > 0): ?>
                     <div class="gallery-container">
                     <?php foreach($posts as $post): ?>
                         <div class="post-item" id="post-<?= $post->post_data['post_id']?>">
-                            <a href="post_preview.php?post_id=<?= $post->post_data['post_id']?>" >
+                            <a href="<?php if ($user_is_log): ?>post_preview.php?post_id=<?=$post->post_data['post_id']?><?php else: ?> /View/login.php<?php endif;?>" >
                                 <img src="<?= $post->post_data['picture_path'] ?>" />
                                 <div class="hover-post-background"> </div>
                                 <div class="post-infos">

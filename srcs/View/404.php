@@ -17,7 +17,7 @@
     </head>
 
     <body>
-        <?php require_once(__DIR__."/header.html") ?>
+        <?php require_once(__DIR__."/header.php") ?>
         <div class="page-container">
             <h1>404 NOT FOUND</h1>
         </div>

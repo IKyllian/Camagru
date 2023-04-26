@@ -59,7 +59,6 @@ load_page(() => {
             let XHR = new XMLHttpRequest();
             XHR.onreadystatechange = function () {
                 if (this.readyState === 4 && this.status === 200) {
-                    console.log(this.responseText);
                     try {
                         let response_parse = JSON.parse(this.responseText);
                         if (response_parse.status) {
@@ -67,6 +66,18 @@ load_page(() => {
                             comment_input.value = "";
                             comment_input.disabled = "";
                             send_button.disabled = "";
+                            
+                            let send_mail_data = new FormData();
+                            send_mail_data.append('comment', comment);
+                            send_mail_data.append('post_id', post_id);
+                            let XHR_mail = new XMLHttpRequest();
+                            XHR_mail.onreadystatechange = function () {
+                                if (this.readyState === 4 && this.status === 200) {
+                                    console.log(this.responseText);
+                                }
+                            }
+                            XHR_mail.open('POST', '../Controller/send_comment_mail.php', true);
+                            XHR_mail.send(send_mail_data);
                         }
                     } catch(e) {
                         console.log("Error " + e);

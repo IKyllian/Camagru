@@ -2,6 +2,6 @@
     if (session_status() === PHP_SESSION_NONE)
         session_start();
     session_destroy();
-    header("Location: /View/login.php");
+    header("Location: /View/Gallery.php");
     exit;
 ?>
