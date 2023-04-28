@@ -58,11 +58,38 @@ load_page(() => {
 
 	clearphoto();
 	window.addEventListener('resize', () => {
-		let canvas = document.getElementById("canvas");
-		if (canvas) {
-			width = canvas.width;
-			height = canvas.height;
-		}
+		if (window.innerWidth < 640 && width >= 640) {
+			let canvas = document.getElementById("canvas");
+			if (canvas) {
+				canvas.width = 420;
+				canvas.height = 260;
+				width = canvas.width;
+				height = canvas.height;
+				filter_width = width - 20;
+				filter_height = height - 20;
+			}
+		} else if (window.innerWidth < 420 && width >= 420) {
+			let canvas = document.getElementById("canvas");
+			if (canvas) {
+				canvas.width = 360;
+				canvas.height = 200;
+				width = canvas.width;
+				height = canvas.height;
+				filter_width = width - 20;
+				filter_height = height - 20;
+			}
+		} else if (window.innerWidth > 640 && width < 640) {
+			let canvas = document.getElementById("canvas");
+			if (canvas) {
+				canvas.width = 640;
+				canvas.height = 480;
+				width = canvas.width;
+				height = canvas.height;
+				filter_width = width - 20;
+				filter_height = height - 20;
+			}
+		} 
+		
 	})
 	create_event_listener(btn_cam, 'click', change_cam_status);
 	create_event_listener(form_file_upload, 'change', on_file_change);
@@ -348,6 +375,8 @@ load_page(() => {
 			let square2 = create_square_span('square-top-right');
 			let square3 = create_square_span('square-bottom-left');
 			let square4 = create_square_span('square-bottom-right');
+
+			console.log("filter_width = ", filter_width, " - filter_height = ", filter_height);
 
 			new_canvas.width = filter_width;
 			new_canvas.height = filter_height;
