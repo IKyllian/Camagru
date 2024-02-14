@@ -9,7 +9,7 @@ services:
       context: .
       dockerfile: nginx/Dockerfile
     ports: 
-      - "443:443"
+      - "3000:3000"
     networks:
       - internal
     volumes:
@@ -45,7 +45,7 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
     ports:
-      - "3306:3306"
+      - "3333:3333"
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       - db:/var/lib/mysql
@@ -60,7 +60,7 @@ services:
     links:
       - db
     ports:
-      - "80:80"
+      - "1024:1024"
     environment:
       PMA_HOST: ${PMA_HOST}
       PMA_PASSWORD: ${DB_ROOT_PASSWORD}
